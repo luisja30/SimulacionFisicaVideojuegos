@@ -8,12 +8,15 @@ public:
 
 	float Modulo();
 	void Normalize();
-	float Escalar(Vector3D& const other);
+	float ProductoEscalar(Vector3D& const other);
 
-	Vector3D operator=(const Vector3D& other);
-	Vector3D operator+(const Vector3D& other);
-	Vector3D operator-(const Vector3D& other);
-	Vector3D operator*(const Vector3D& other);
+	Vector3D& operator=(const Vector3D& other);
+	Vector3D operator+(const Vector3D& other) const;
+	Vector3D operator-(const Vector3D& other) const;
+	Vector3D operator*(const float& e) const;
 
+	float getX() const;
+	float getY() const;
+	float getZ() const;
 };
 

@@ -7,6 +7,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
+#include "Vector3D.h"
 
 #include <iostream>
 
@@ -29,9 +30,17 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-RenderItem* sphere = NULL;
-PxTransform transform;
 
+
+RenderItem* renderItemCenter = NULL;
+RenderItem* renderItemX = NULL;
+RenderItem* renderItemY = NULL;
+RenderItem* renderItemZ = NULL;
+
+PxTransform transformCenter;
+PxTransform transformAxisX;
+PxTransform transformAxisY;
+PxTransform transformAxisZ;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -57,12 +66,20 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	transform = PxTransform(0, 0, 0);
-	sphere = new RenderItem(CreateShape(PxSphereGeometry(10.0f)), &transform, { 0.0,0.0,1.0,1.0 });
 
+	//Practica 0
+	Vector3D ejeX(10, 0, 0), ejeY(0, 10, 0), ejeZ(0, 0, 10);
 
+	transformAxisX = PxTransform(ejeX.getX(), ejeX.getY(), ejeX.getZ());
+	transformAxisY = PxTransform(ejeY.getX(), ejeY.getY(), ejeY.getZ());
+	transformAxisZ = PxTransform(ejeZ.getX(), ejeZ.getY(), ejeZ.getZ());
+	transformCenter = PxTransform(0, 0, 0);
 
-	}
+	renderItemCenter = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformCenter, { 1.0,1.0,1.0,1.0 });
+	renderItemX = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisX, { 1.0,0.0,0.0,1.0 });
+	renderItemY = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisY, { 0.0,1.0,0.0,1.0 });
+	renderItemZ = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisZ, { 0.0,0.0,1.0,1.0 });
+}
 
 
 // Function to configure what happens in each step of physics
@@ -82,7 +99,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	DeregisterRenderItem(sphere);
+	DeregisterRenderItem(renderItemCenter);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
