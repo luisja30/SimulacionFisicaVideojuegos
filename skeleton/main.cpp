@@ -8,6 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Vector3D.h"
+#include "Particle.h"
 
 #include <iostream>
 
@@ -42,6 +43,8 @@ PxTransform transformAxisX;
 PxTransform transformAxisY;
 PxTransform transformAxisZ;
 
+Particle* particula_ = NULL;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -68,17 +71,22 @@ void initPhysics(bool interactive)
 
 
 	//Practica 0
-	Vector3D ejeX(10, 0, 0), ejeY(0, 10, 0), ejeZ(0, 0, 10);
+	/*Vector3D ejeX(10, 0, 0), ejeY(0, 10, 0), ejeZ(0, 0, 10);
 
 	transformAxisX = PxTransform(ejeX.getX(), ejeX.getY(), ejeX.getZ());
 	transformAxisY = PxTransform(ejeY.getX(), ejeY.getY(), ejeY.getZ());
 	transformAxisZ = PxTransform(ejeZ.getX(), ejeZ.getY(), ejeZ.getZ());
-	transformCenter = PxTransform(0, 0, 0);
+	transformCenter = PxTransform(0, 0, 0);*/
 
-	renderItemCenter = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformCenter, { 1.0,1.0,1.0,1.0 });
-	renderItemX = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisX, { 1.0,0.0,0.0,1.0 });
-	renderItemY = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisY, { 0.0,1.0,0.0,1.0 });
-	renderItemZ = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisZ, { 0.0,0.0,1.0,1.0 });
+	//renderItemCenter = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformCenter, { 1.0,1.0,1.0,1.0 });
+	//renderItemX = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisX, { 1.0,0.0,0.0,1.0 });
+	//renderItemY = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisY, { 0.0,1.0,0.0,1.0 });
+	//renderItemZ = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisZ, { 0.0,0.0,1.0,1.0 });
+
+
+	//Practica 1
+	particula_ = new Particle(Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(20, 0, 0));
+	particula_->setColor({ 1.0,0.0,0.0,1.0 });
 }
 
 
@@ -91,6 +99,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	particula_->integrate(t);
 }
 
 // Function to clean data
@@ -99,7 +108,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	DeregisterRenderItem(renderItemCenter);
+	//DeregisterRenderItem(renderItemCenter);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -111,7 +120,7 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
-	}
+}
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
