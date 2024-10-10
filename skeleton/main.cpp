@@ -108,7 +108,7 @@ void stepPhysics(bool interactive, double t)
 		proyectil_->integrate(t);*/
 
 	//Lista de particulas
-	/*for (int i = 0; i < particles_.size(); i++) {
+	for (int i = 0; i < particles_.size(); i++) {
 		if (particles_[i] != nullptr) {
 			particles_[i]->integrate(t);
 			if (particles_[i]->isGrounded()) {
@@ -117,7 +117,7 @@ void stepPhysics(bool interactive, double t)
 			}
 		}
 
-	}*/
+	}
 }
 
 // Function to clean data
@@ -147,10 +147,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	/*case 'B': {
+	case 'B': {
 		particles_.push_back(new Projectile(Vector3(camera.p), Vector3(-100, 0, -100), Vector3(0, 0, 0)));
 		break;
-	}*/
+	}
 	//case ' ':	break;
 	case ' ':
 	{
