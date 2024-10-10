@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 #include "Vector3D.h"
 #include "Particle.h"
+#include "Projectile.h"
 
 #include <iostream>
 
@@ -44,6 +45,9 @@ PxTransform transformAxisY;
 PxTransform transformAxisZ;
 
 Particle* particula_ = NULL;
+Projectile* proyectil_ = NULL;
+
+std::vector<Particle*> particles_;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -56,7 +60,7 @@ void initPhysics(bool interactive)
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
 	gPvd->connect(*transport,PxPvdInstrumentationFlag::eALL);
 
-	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
+	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
@@ -85,8 +89,8 @@ void initPhysics(bool interactive)
 
 
 	//Practica 1
-	particula_ = new Particle(Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(20, 0, 0));
-	particula_->setColor({ 1.0,0.0,0.0,1.0 });
+	//particula_ = new Particle(Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(20, 0, 0));
+	//particula_->setColor({ 1.0,0.0,0.0,1.0 });
 }
 
 
@@ -99,7 +103,21 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	particula_->integrate(t);
+	//particula_->integrate(t);
+	/*if(proyectil_ != nullptr) 
+		proyectil_->integrate(t);*/
+
+	//Lista de particulas
+	/*for (int i = 0; i < particles_.size(); i++) {
+		if (particles_[i] != nullptr) {
+			particles_[i]->integrate(t);
+			if (particles_[i]->isGrounded()) {
+				delete particles_[i];
+				particles_[i] = nullptr;
+			}
+		}
+
+	}*/
 }
 
 // Function to clean data
@@ -129,7 +147,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
+	/*case 'B': {
+		particles_.push_back(new Projectile(Vector3(camera.p), Vector3(-100, 0, -100), Vector3(0, 0, 0)));
+		break;
+	}*/
 	//case ' ':	break;
 	case ' ':
 	{
