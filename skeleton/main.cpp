@@ -10,6 +10,7 @@
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Projectile.h"
+#include "ParticleSystem.h"
 
 #include <iostream>
 
@@ -48,6 +49,8 @@ Particle* particula_ = NULL;
 Projectile* proyectil_ = NULL;
 
 std::vector<Particle*> particles_;
+
+ParticleSystem* particleSys_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -91,6 +94,9 @@ void initPhysics(bool interactive)
 	//Practica 1
 	//particula_ = new Particle(Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(20, 0, 0));
 	//particula_->setColor({ 1.0,0.0,0.0,1.0 });
+
+	//Practica 2
+	particleSys_ = new ParticleSystem(Vector3(0, 0, 0), Vector3(0, 10, 0), Vector3(0, 1, 0));
 }
 
 
@@ -100,7 +106,6 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	//particula_->integrate(t);
@@ -116,8 +121,9 @@ void stepPhysics(bool interactive, double t)
 				particles_[i] = nullptr;
 			}
 		}
-
 	}
+	particleSys_->update(t);
+
 }
 
 // Function to clean data
@@ -152,8 +158,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	//case ' ':	break;
-	case ' ':
-	{
+	case ' ': {
 		break;
 	}
 	default:

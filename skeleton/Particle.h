@@ -13,6 +13,8 @@ protected:
 	physx::PxTransform pose_;
 	RenderItem* renderItem_;
 	double dumping_; // 0 < d < 1
+	bool isAlive_;
+	double aliveTime_ = 2000;
 public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel);
 	~Particle();
@@ -20,6 +22,7 @@ public:
 	virtual void integrate(double t);
 	void setColor(Vector4 color);
 	bool isGrounded();
-
+	Vector3 getPosition() const;
+	bool getAlive() const;
 };
 
