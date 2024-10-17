@@ -14,15 +14,16 @@ protected:
 	RenderItem* renderItem_;
 	double dumping_; // 0 < d < 1
 	bool isAlive_;
-	double aliveTime_ = 2000;
+	double aliveTime_;
 public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel);
+	//Particle(Vector3 pos, Vector3 vel, Vector3 acel, double lifeTime);
 	~Particle();
 
 	virtual void integrate(double t);
 	void setColor(Vector4 color);
 	bool isGrounded();
 	Vector3 getPosition() const;
-	bool getAlive() const;
+	bool isAlive() const;
 };
 

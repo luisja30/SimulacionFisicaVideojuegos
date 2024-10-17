@@ -96,7 +96,7 @@ void initPhysics(bool interactive)
 	//particula_->setColor({ 1.0,0.0,0.0,1.0 });
 
 	//Practica 2
-	particleSys_ = new ParticleSystem(Vector3(0, 0, 0), Vector3(0, 10, 0), Vector3(0, 1, 0));
+	particleSys_ = new ParticleSystem(Vector3(0, 0, 0), Vector3(0, 10, 0), Vector3(0, 1, 0), 300);
 }
 
 

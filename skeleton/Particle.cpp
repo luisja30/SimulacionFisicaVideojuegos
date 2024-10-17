@@ -1,8 +1,8 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel) : vel_(vel), acel_(acel), dumping_(0.998) {
-	isAlive_ = true;
-	pose_ = PxTransform(pos.x, pos.y, pos.z);
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel) :  pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(100), isAlive_(true) {
+	//isAlive_ = true;
+	//pose_ = PxTransform(pos.x, pos.y, pos.z);
 	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(5.0f)), &pose_, {0.0, 0.0, 1.0, 1.0});
 }
 
@@ -12,9 +12,20 @@ Particle::~Particle() {
 }
 
 void Particle::integrate(double t) {
+	//Si no esta viva la particula, no devolvemos nada
+	if (!isAlive_)
+		return;
+
+	//Actualizamos el movimiento
 	vel_ = vel_ + (acel_ * t);
 	vel_ = vel_ * pow(dumping_, t);
 	pose_.p = pose_.p + (vel_ * t);
+
+	//Decrementamos tiempo de vida y dejamos de actualizar si la particula no está viva
+	aliveTime_ -= t;
+
+	if (aliveTime_ <= 0)
+		isAlive_ = false;
 }
 
 void Particle::setColor(Vector4 color) {
@@ -29,6 +40,6 @@ Vector3 Particle::getPosition() const {
 	return pose_.p;
 }
 
-bool Particle::getAlive() const {
+bool Particle::isAlive() const {
 	return isAlive_;
 }
