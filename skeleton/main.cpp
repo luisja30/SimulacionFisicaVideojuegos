@@ -11,6 +11,7 @@
 #include "Particle.h"
 #include "Projectile.h"
 #include "RainGenerator.h"
+#include "HoseGenerator.h"
 
 #include <iostream>
 
@@ -52,6 +53,7 @@ std::vector<Particle*> particles_;
 
 ParticleGenerator* particleSys_ = NULL;
 RainGenerator* rainGen_ = NULL;
+HoseGenerator* hoseGen_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -98,7 +100,8 @@ void initPhysics(bool interactive)
 
 	//Practica 2
 	//particleSys_ = new ParticleGenerator(Vector3(0, 70, -90), Vector3(0, 10, 0), Vector3(0, 1, 0), 300);
-	rainGen_ = new RainGenerator(Vector3(0, 150, 0), 1000, 100);
+	//rainGen_ = new RainGenerator(Vector3(0, 150, 0), 1000, 100);
+	hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
 }
 
 
@@ -126,8 +129,8 @@ void stepPhysics(bool interactive, double t)
 	}
 
 	//particleSys_->update(t);
-	rainGen_->update(t);
-
+	//rainGen_->update(t);
+	hoseGen_->update(t);
 }
 
 // Function to clean data
