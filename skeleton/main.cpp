@@ -12,6 +12,7 @@
 #include "Projectile.h"
 #include "RainGenerator.h"
 #include "HoseGenerator.h"
+#include "MistGenerator.h"
 
 #include <iostream>
 
@@ -54,6 +55,7 @@ std::vector<Particle*> particles_;
 ParticleGenerator* particleSys_ = NULL;
 RainGenerator* rainGen_ = NULL;
 HoseGenerator* hoseGen_ = NULL;
+MistGenerator* mistGen_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -100,8 +102,9 @@ void initPhysics(bool interactive)
 
 	//Practica 2
 	//particleSys_ = new ParticleGenerator(Vector3(0, 70, -90), Vector3(0, 10, 0), Vector3(0, 1, 0), 300);
-	//rainGen_ = new RainGenerator(Vector3(0, 150, 0), 1000, 100);
-	hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
+	//rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
+	//hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
+	//mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
 }
 
 
@@ -129,8 +132,14 @@ void stepPhysics(bool interactive, double t)
 	}
 
 	//particleSys_->update(t);
-	//rainGen_->update(t);
-	hoseGen_->update(t);
+	if (rainGen_ != nullptr)
+		rainGen_->update(t);
+
+	if (hoseGen_ != nullptr)
+		hoseGen_->update(t);
+
+	if (mistGen_ != nullptr)
+		mistGen_->update(t);
 }
 
 // Function to clean data
@@ -165,11 +174,62 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	//case ' ':	break;
-	case ' ': {
+	case 'Z': {
+		//LLuvia
+		if(rainGen_ == nullptr) rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
+		if (mistGen_ != nullptr) {
+			delete mistGen_;
+			mistGen_ = nullptr;
+		}
+		if (hoseGen_ != nullptr) {
+			delete hoseGen_;
+			hoseGen_ = nullptr;
+		}
+		break;
+	}
+	case 'X': {
+		//Manguera
+		if (hoseGen_ == nullptr)hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
+		if (rainGen_ != nullptr) {
+			delete rainGen_;
+			rainGen_ = nullptr;
+		}
+		if (mistGen_ != nullptr) {
+			delete mistGen_;
+			mistGen_ = nullptr;
+		}
+		break;
+	}
+	case 'C': {
+		//Niebla
+		if (mistGen_ == nullptr)mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
+		if (rainGen_ != nullptr) {
+			delete rainGen_;
+			rainGen_ = nullptr;
+		}
+		if (hoseGen_ != nullptr) {
+			delete hoseGen_;
+			hoseGen_ = nullptr;
+		}
 		break;
 	}
 	default:
 		break;
+	}
+}
+
+
+void changeSystem(char s) {
+	switch (s) {
+	case 'A': {
+	
+	}
+	case 'S': {
+		
+	}
+	case 'D': {
+		
+	}
 	}
 }
 

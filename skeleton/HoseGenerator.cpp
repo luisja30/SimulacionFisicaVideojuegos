@@ -5,13 +5,11 @@ HoseGenerator::HoseGenerator(Vector3 pos, double range) :
 
 }
 void HoseGenerator::generateParticle() {
-	//Generamos una posicion aletaria en X y Z
 	double posX =origin_.x;
 	double posY = origin_.y;
 	double posZ = origin_.z;
 	Vector3 newPos = Vector3(posX, posY, posZ);
 
-	//Las particulas se mueven solo en el eje Y
 	double velX = std::uniform_real_distribution<double>(-10, 10)(rd);
 	double velY = std::uniform_real_distribution<double>(-300, -200)(rd);
 	double velZ = std::uniform_real_distribution<double>(-10, 10)(rd);

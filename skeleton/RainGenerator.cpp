@@ -1,23 +1,10 @@
 #include "RainGenerator.h"
 
-RainGenerator::RainGenerator(Vector3 pos, double range, double radius) :
-	ParticleGenerator(pos, range), radius_(radius) {
+RainGenerator::RainGenerator(Vector3 pos, double radius) :
+	ParticleGenerator(pos, 1000), radius_(radius) {
 }
 
 void RainGenerator::generateParticle() {
-
-	/*double posX = std::uniform_real_distribution<double>(-radius_, radius_)(rd);
-	double posZ = std::uniform_real_distribution<double>(-radius_, radius_)(rd);
-
-	double velX = std::uniform_real_distribution<double>(-radius_, radius_)(rd);
-	double velY = std::uniform_real_distribution<double>(-10, 10)(rd);
-	double velZ = std::uniform_real_distribution<double>(-radius_, radius_)(rd);
-	particles_.push_back(new Particle(Vector3(posX, pos_.y, posZ), Vector3(velX, velY, velZ), Vector3(0, gravity_, 0)));*/
-
-	//Valores para una manguera
-	/*double velX = std::uniform_real_distribution<double>(-10, 10)(rd);
-	double velY = std::uniform_real_distribution<double>(-100, -90)(rd);
-	double velZ = std::uniform_real_distribution<double>(-10, 10)(rd);*/
 
 	//Generamos una posicion aletaria en X y Z
 	double posX = std::normal_distribution<double>(origin_.x - radius_, origin_.x + radius_)(rd);

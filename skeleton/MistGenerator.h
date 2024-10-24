@@ -1,12 +1,12 @@
 #pragma once
-#include "ParticleGenerator.h"
 
-class RainGenerator : public ParticleGenerator {
+#include "ParticleGenerator.h"
+class MistGenerator : public ParticleGenerator {
 protected:
 	int radius_;
 	virtual void generateParticle() override;
 public:
-	RainGenerator(Vector3 pos, double radius);
+	MistGenerator(Vector3 pos, double radius);
 	virtual void update(double t) override;
 };
 
