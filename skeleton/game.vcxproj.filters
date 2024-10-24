@@ -13,7 +13,8 @@
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp" />
+    <ClCompile Include="RainGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -28,7 +29,8 @@
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Projectile.h" />
-    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleGenerator.h" />
+    <ClInclude Include="RainGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

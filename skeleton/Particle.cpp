@@ -6,6 +6,9 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel) :  pose_(pos), vel_(v
 	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(5.0f)), &pose_, {0.0, 0.0, 1.0, 1.0});
 }
 
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r) : pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(100), isAlive_(true) {
+	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+}
 Particle::~Particle() {
 	DeregisterRenderItem(renderItem_);
 	delete renderItem_;

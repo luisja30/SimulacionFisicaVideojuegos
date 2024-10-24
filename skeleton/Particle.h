@@ -15,8 +15,10 @@ protected:
 	double dumping_; // 0 < d < 1
 	bool isAlive_;
 	double aliveTime_;
+	float radius_;
 public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r);
 	//Particle(Vector3 pos, Vector3 vel, Vector3 acel, double lifeTime);
 	~Particle();
 

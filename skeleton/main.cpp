@@ -10,7 +10,7 @@
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Projectile.h"
-#include "ParticleSystem.h"
+#include "RainGenerator.h"
 
 #include <iostream>
 
@@ -50,7 +50,8 @@ Projectile* proyectil_ = NULL;
 
 std::vector<Particle*> particles_;
 
-ParticleSystem* particleSys_ = NULL;
+ParticleGenerator* particleSys_ = NULL;
+RainGenerator* rainGen_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -96,7 +97,8 @@ void initPhysics(bool interactive)
 	//particula_->setColor({ 1.0,0.0,0.0,1.0 });
 
 	//Practica 2
-	particleSys_ = new ParticleSystem(Vector3(0, 0, 0), Vector3(0, 10, 0), Vector3(0, 1, 0), 300);
+	//particleSys_ = new ParticleGenerator(Vector3(0, 70, -90), Vector3(0, 10, 0), Vector3(0, 1, 0), 300);
+	rainGen_ = new RainGenerator(Vector3(0, 150, 0), 1000, 100);
 }
 
 
@@ -122,7 +124,9 @@ void stepPhysics(bool interactive, double t)
 			}
 		}
 	}
-	particleSys_->update(t);
+
+	//particleSys_->update(t);
+	rainGen_->update(t);
 
 }
 
