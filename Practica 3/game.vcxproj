@@ -257,6 +257,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MistGenerator.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RainGenerator.cpp" />
@@ -269,8 +270,10 @@
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="MistGenerator.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="RainGenerator.h" />

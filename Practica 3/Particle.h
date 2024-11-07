@@ -16,15 +16,23 @@ protected:
 	bool isAlive_;
 	double aliveTime_;
 	float radius_;
+
+	double massInv_, mass_;
+	Vector3 force_;
+
 public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime);
-	//Particle(Vector3 pos, Vector3 vel, Vector3 acel, double lifeTime);
 	~Particle();
 
-	virtual void integrate(double t);
 	void setColor(Vector4 color);
+	void setMass(double m);
+
+	void addForce(const Vector3& f);
+	void clearForce();
+
+	virtual void integrate(double t);
 	bool isGrounded();
 	Vector3 getPosition() const;
 	bool isAlive() const;

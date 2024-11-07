@@ -18,8 +18,8 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double alive
 }
 
 Particle::~Particle() {
-	DeregisterRenderItem(renderItem_);
-	delete renderItem_;
+	renderItem_->release();
+	renderItem_ = nullptr;
 }
 
 void Particle::integrate(double t) {
@@ -41,6 +41,18 @@ void Particle::integrate(double t) {
 
 void Particle::setColor(Vector4 color) {
 	renderItem_->color = color;
+}
+
+void Particle::setMass(double m) {
+	mass_ = m;
+}
+
+void Particle::addForce(const Vector3& f) {
+	force_ += f;
+}
+
+void Particle::clearForce() {
+	force_ = { 0,0,0 };
 }
 
 bool Particle::isGrounded() {

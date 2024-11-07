@@ -1,0 +1,19 @@
+#pragma once
+#include "Particle.h"
+
+using namespace std;
+
+class ForceGenerator {
+protected:
+	Vector3 pos_;
+	double t_;
+public:
+	ForceGenerator(Vector3 p) : pos_(p) {};
+	virtual ~ForceGenerator() {};
+
+	virtual void updateForce(Particle* p) = 0;
+
+	void updateTime(double t) {
+		t_ += t;
+	}
+};
