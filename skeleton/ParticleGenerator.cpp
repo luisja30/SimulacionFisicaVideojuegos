@@ -6,10 +6,9 @@ ParticleGenerator::ParticleGenerator(Vector3 pos, double range)
 
 ParticleGenerator::~ParticleGenerator() {
 	//Recorremos la lista y vamos eliminando las partículas para que no quede basura
-	for (auto it = particles_.begin(); it != particles_.end(); it++) {
-		delete* it;
-		it = particles_.erase(it);
-	}
+	for (Particle* p : particles_)
+		delete p;
+	particles_.clear();
 }
 
 //void ParticleGenerator::generateParticle() {
