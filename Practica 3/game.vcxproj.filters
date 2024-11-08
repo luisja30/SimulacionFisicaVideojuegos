@@ -18,6 +18,7 @@
     <ClCompile Include="HoseGenerator.cpp" />
     <ClCompile Include="MistGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
+    <ClCompile Include="GravityForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="MistGenerator.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
+    <ClInclude Include="GravityForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -7,6 +7,6 @@ protected:
 
 public:
 	GravityForceGenerator(const Vector3& g);
-	virtual void updateParticle(Particle* p);
+	virtual void updateForce(Particle* p) override;
 };
 

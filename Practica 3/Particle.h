@@ -4,19 +4,19 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include <iostream>
-
-
 using namespace physx;
+
 class Particle {
 protected:
 	Vector3 vel_, acel_;
 	physx::PxTransform pose_;
 	RenderItem* renderItem_;
 	double dumping_; // 0 < d < 1
-	bool isAlive_;
 	double aliveTime_;
+	bool isAlive_;
 	float radius_;
 
+	//Fuerzas
 	double massInv_, mass_;
 	Vector3 force_;
 
@@ -34,9 +34,11 @@ public:
 	Vector3 getPosition() const;
 	double getMass() const;
 
+	//Fuerzas
 	void addForce(const Vector3& f);
 	void clearForce();
 
+	//Booleanos
 	bool isGrounded();
 	bool isAlive() const;
 

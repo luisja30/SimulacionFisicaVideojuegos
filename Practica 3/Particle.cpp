@@ -28,7 +28,7 @@ void Particle::integrate(double t) {
 		return;
 
 	//Actualizamos el movimiento
-	vel_ = vel_ + (acel_ * t);
+	vel_ = vel_ + (force_ * t);
 	vel_ = vel_ * pow(dumping_, t);
 	pose_.p = pose_.p + (vel_ * t);
 

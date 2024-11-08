@@ -1,4 +1,4 @@
-﻿  ParticleForceRegistry.cpp
+﻿  ParticleGenerator.cpp
 C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: "physx::PxLightCpuTask::mRefCount": un miembro de datos no estático con un tipo calificado volátil ya no implica
            que los constructores de copia/movimiento generados por el compilador y los operadores de asignación de copia o movimiento no sean triviales
 C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(326,19): message : vea la declaración de 'physx::PxLightCpuTask::mRefCount'
