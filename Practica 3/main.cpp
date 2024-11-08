@@ -121,7 +121,7 @@ void stepPhysics(bool interactive, double t)
 		proyectil_->integrate(t);*/
 
 	//Lista de particulas
-	for (int i = 0; i < particles_.size(); i++) {
+	/*for (int i = 0; i < particles_.size(); i++) {
 		if (particles_[i] != nullptr) {
 			particles_[i]->integrate(t);
 			if (particles_[i]->isGrounded()) {
@@ -129,7 +129,7 @@ void stepPhysics(bool interactive, double t)
 				particles_[i] = nullptr;
 			}
 		}
-	}
+	}*/
 
 	//particleSys_->update(t);
 	if (rainGen_ != nullptr)

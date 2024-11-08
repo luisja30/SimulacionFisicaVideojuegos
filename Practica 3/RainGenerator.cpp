@@ -13,17 +13,20 @@ void RainGenerator::generateParticle() {
 	Vector3 newPos = Vector3(posX, posY, posZ);
 
 	//Las particulas se mueven solo en el eje Y
-	double velY = -300;
-	Vector3 newVel = Vector3(0, velY, 0);
+	//double velY = -300;
+	//Vector3 newVel = Vector3(0, velY, 0);
 
 	//Añadimos particula
-	Particle* newParticle = new Particle(newPos, newVel, Vector3(0, -10, 0), 1);
+	Particle* newParticle = new Particle(newPos, Vector3(0,0,0), Vector3(0, -10, 0), 1, 100, 10.0);
 	newParticle->setColor({ 0,0,1,1 });
 	particles_.push_back(newParticle);
+
+	forceReg_->addRegistry(getForceGenerator("GRAVITY"), newParticle);
 }
 
 void RainGenerator::update(double t) {
     generateParticle();
+	forceReg_->updateForces();
 	for (auto it = particles_.begin(); it != particles_.end(); it++) {
 		if (*it != nullptr) {
 			(*it)->integrate(t);

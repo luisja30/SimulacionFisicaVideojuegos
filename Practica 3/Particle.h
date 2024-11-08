@@ -24,6 +24,7 @@ public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass);
 	~Particle();
 	
 	//Setters

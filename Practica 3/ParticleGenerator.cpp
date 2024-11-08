@@ -4,7 +4,8 @@ ParticleGenerator::ParticleGenerator(Vector3 pos, double range)
 	: origin_(pos), range_(range) {
 
 	//Creamos las fuerzas
-	//createForceGenerators();
+	forceReg_ = new ParticleForceRegistry();
+	createForceGenerators();
 }
 
 ParticleGenerator::~ParticleGenerator() {
@@ -16,7 +17,28 @@ ParticleGenerator::~ParticleGenerator() {
 
 void ParticleGenerator::createForceGenerators() {
 	//Fuerza gravitatoria
-	forceGen_.push_back(new GravityForceGenerator(Vector3(0, -9.8, 0)));
+	forceGen_.push_back(new GravityForceGenerator(Vector3(0, -9.8, 0), "GRAVITY"));
+
+	//Viento 
+	
+	//Tornado
+
+	//Explosion
+}
+
+ForceGenerator* ParticleGenerator::getForceGenerator(string name) {
+	auto it = forceGen_.begin();
+	bool found = false;
+	ForceGenerator* gen = nullptr;
+
+	while (it != forceGen_.end() && !found) {
+		if ((*it)->getName() == name) {
+			gen = (*it);
+			found = true;
+		}
+		else it++;
+	}
+	return gen;
 }
 
 

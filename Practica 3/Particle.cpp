@@ -17,6 +17,13 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double alive
 	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
 }
 
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass) 
+	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(aliveTime), isAlive_(true) {
+	setMass(mass);
+	force_ = { 0,0,0 };
+	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+}
+
 Particle::~Particle() {
 	renderItem_->release();
 	renderItem_ = nullptr;
@@ -28,7 +35,8 @@ void Particle::integrate(double t) {
 		return;
 
 	//Actualizamos el movimiento
-	vel_ = vel_ + (force_ * t);
+	vel_ = vel_ + (force_ * t); //aplicando la fuerza de un generador de fuerzas
+	//vel_ = vel_ + (acel_ * t);  //aplicando aceleracion
 	vel_ = vel_ * pow(dumping_, t);
 	pose_.p = pose_.p + (vel_ * t);
 
@@ -37,6 +45,7 @@ void Particle::integrate(double t) {
 
 	if (aliveTime_ <= 0)
 		isAlive_ = false;
+	clearForce();
 }
 
 void Particle::setColor(Vector4 color) {
