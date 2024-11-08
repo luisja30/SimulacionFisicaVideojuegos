@@ -63,6 +63,10 @@ Vector3 Particle::getPosition() const {
 	return pose_.p;
 }
 
+double Particle::getMass() const {
+	return mass_;
+}
+
 bool Particle::isAlive() const {
 	return isAlive_;
 }

@@ -8,7 +8,7 @@ protected:
 	Vector3 pos_;
 	double t_;
 public:
-	ForceGenerator(Vector3 p) : pos_(p) {};
+	ForceGenerator(Vector3 p) : pos_(p), t_(0) {};
 	virtual ~ForceGenerator() {};
 
 	virtual void updateForce(Particle* p) = 0;

@@ -25,16 +25,21 @@ public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime);
 	~Particle();
-
+	
+	//Setters
 	void setColor(Vector4 color);
 	void setMass(double m);
+
+	//Getters
+	Vector3 getPosition() const;
+	double getMass() const;
 
 	void addForce(const Vector3& f);
 	void clearForce();
 
-	virtual void integrate(double t);
 	bool isGrounded();
-	Vector3 getPosition() const;
 	bool isAlive() const;
+
+	virtual void integrate(double t);
 };
 

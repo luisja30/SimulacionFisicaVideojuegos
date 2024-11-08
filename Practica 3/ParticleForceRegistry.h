@@ -4,11 +4,11 @@
 #include "Particle.h"
 
 using namespace std;
-class ParticleForceRegistry
-{
+
+class ParticleForceRegistry {
 protected:
 	
-
 public:
+
 };
 
