@@ -4,6 +4,7 @@ HoseGenerator::HoseGenerator(Vector3 pos, double range) :
 	ParticleGenerator(pos, range) {
 
 }
+
 void HoseGenerator::generateParticle() {
 	double posX =origin_.x;
 	double posY = origin_.y;

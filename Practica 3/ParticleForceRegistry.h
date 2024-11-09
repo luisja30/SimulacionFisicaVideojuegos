@@ -11,7 +11,9 @@ protected:
 	multimap<ForceGenerator*, Particle*> registryForces_;
 public:
 	ParticleForceRegistry();
+	virtual ~ParticleForceRegistry();
 	void addRegistry(ForceGenerator* forceGen, Particle* p);
+	void deleteParticleRegistry(Particle* p);
 	void updateForces();
 };
 

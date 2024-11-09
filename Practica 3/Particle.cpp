@@ -34,17 +34,21 @@ void Particle::integrate(double t) {
 	if (!isAlive_)
 		return;
 
+	//Calcular aceleracion a partir de la fuerza y masa
+	acel_ = force_ / getMass();
 	//Actualizamos el movimiento
-	vel_ = vel_ + (force_ * t); //aplicando la fuerza de un generador de fuerzas
+	vel_ += acel_ * t; //aplicando la fuerza de un generador de fuerzas
 	//vel_ = vel_ + (acel_ * t);  //aplicando aceleracion
-	vel_ = vel_ * pow(dumping_, t);
-	pose_.p = pose_.p + (vel_ * t);
+	vel_ *= pow(dumping_, t);
+	pose_.p += vel_ * t;
 
 	//Decrementamos tiempo de vida y dejamos de actualizar si la particula no está viva
 	aliveTime_ -= t;
 
 	if (aliveTime_ <= 0)
 		isAlive_ = false;
+
+	//Borrar fuerza
 	clearForce();
 }
 
@@ -54,6 +58,7 @@ void Particle::setColor(Vector4 color) {
 
 void Particle::setMass(double m) {
 	mass_ = m;
+	massInv_ = 1 / mass_;
 }
 
 void Particle::addForce(const Vector3& f) {
@@ -61,7 +66,7 @@ void Particle::addForce(const Vector3& f) {
 }
 
 void Particle::clearForce() {
-	force_ = { 0,0,0 };
+	force_ *= 0;
 }
 
 bool Particle::isGrounded() {
@@ -74,6 +79,10 @@ Vector3 Particle::getPosition() const {
 
 double Particle::getMass() const {
 	return mass_;
+}
+
+double Particle::getInvMass() const {
+	return massInv_;
 }
 
 bool Particle::isAlive() const {

@@ -21,6 +21,7 @@ void RainGenerator::generateParticle() {
 	newParticle->setColor({ 0,0,1,1 });
 	particles_.push_back(newParticle);
 
+	//Adherimos una fuerza a la particula
 	forceReg_->addRegistry(getForceGenerator("GRAVITY"), newParticle);
 }
 
@@ -32,6 +33,7 @@ void RainGenerator::update(double t) {
 			(*it)->integrate(t);
 			//Comprobar rango de recorrido o si la particula sigue viva
 			if (!(*it)->isAlive() || ((*it)->getPosition() - origin_).magnitude() > range_) {
+				forceReg_->deleteParticleRegistry(*it);
 				delete *it;
 				it = particles_.erase(it);
 			}

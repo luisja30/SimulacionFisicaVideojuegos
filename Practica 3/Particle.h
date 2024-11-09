@@ -34,6 +34,7 @@ public:
 	//Getters
 	Vector3 getPosition() const;
 	double getMass() const;
+	double getInvMass() const;
 
 	//Fuerzas
 	void addForce(const Vector3& f);

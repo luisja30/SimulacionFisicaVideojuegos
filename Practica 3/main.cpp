@@ -53,6 +53,7 @@ Projectile* proyectil_ = NULL;
 std::vector<Particle*> particles_;
 
 ParticleGenerator* particleSys_ = NULL;
+ParticleGenerator* particleSysV2_ = NULL;
 RainGenerator* rainGen_ = NULL;
 HoseGenerator* hoseGen_ = NULL;
 MistGenerator* mistGen_ = NULL;
@@ -105,6 +106,10 @@ void initPhysics(bool interactive)
 	//rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
 	//hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
 	//mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
+
+	particleSys_ = new ParticleGenerator(Vector3(0, 150, 0), 1000);
+	particleSys_->setMode(0);
+
 }
 
 
@@ -131,15 +136,15 @@ void stepPhysics(bool interactive, double t)
 		}
 	}*/
 
-	//particleSys_->update(t);
-	if (rainGen_ != nullptr)
+	particleSys_->update(t);
+	/*if (rainGen_ != nullptr)
 		rainGen_->update(t);
 
 	if (hoseGen_ != nullptr)
 		hoseGen_->update(t);
 
 	if (mistGen_ != nullptr)
-		mistGen_->update(t);
+		mistGen_->update(t);*/
 }
 
 // Function to clean data
@@ -176,7 +181,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'Z': {
 		//LLuvia
-		if(rainGen_ == nullptr) rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
+		/*if(rainGen_ == nullptr) rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
 		if (mistGen_ != nullptr) {
 			delete mistGen_;
 			mistGen_ = nullptr;
@@ -184,12 +189,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		if (hoseGen_ != nullptr) {
 			delete hoseGen_;
 			hoseGen_ = nullptr;
-		}
+		}*/
+		particleSys_->setMode(0);
 		break;
 	}
 	case 'X': {
 		//Manguera
-		if (hoseGen_ == nullptr)hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
+		/*if (hoseGen_ == nullptr)hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
 		if (rainGen_ != nullptr) {
 			delete rainGen_;
 			rainGen_ = nullptr;
@@ -197,12 +203,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		if (mistGen_ != nullptr) {
 			delete mistGen_;
 			mistGen_ = nullptr;
-		}
+		}*/
+		particleSys_->setMode(1);
 		break;
 	}
 	case 'C': {
 		//Niebla
-		if (mistGen_ == nullptr)mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
+		/*if (mistGen_ == nullptr)mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
 		if (rainGen_ != nullptr) {
 			delete rainGen_;
 			rainGen_ = nullptr;
@@ -210,26 +217,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		if (hoseGen_ != nullptr) {
 			delete hoseGen_;
 			hoseGen_ = nullptr;
-		}
+		}*/
+		particleSys_->setMode(2);
 		break;
 	}
 	default:
 		break;
-	}
-}
-
-
-void changeSystem(char s) {
-	switch (s) {
-	case 'A': {
-	
-	}
-	case 'S': {
-		
-	}
-	case 'D': {
-		
-	}
 	}
 }
 

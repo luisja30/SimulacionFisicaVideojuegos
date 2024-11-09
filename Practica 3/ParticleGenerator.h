@@ -15,15 +15,22 @@ enum TypeForce {
 	EXPLOSION
 };
 
+enum GenerateMode {
+	RAIN,
+	MIST,
+	HOSE
+};
+
 class ParticleGenerator {
 protected:
 	Vector3 origin_;
 	std::list<Particle*> particles_;
 	int range_, gravity_ = -9.8;
 	std::mt19937_64 rd;
+	GenerateMode genMode_;
 
 	//Metodo abstarcto para generar particulas con distintas distribuciones
-	virtual void generateParticle() = 0;
+	virtual void generateParticle();
 
 	//Fuerzas
 	std::vector<ForceGenerator*> forceGen_;
@@ -34,9 +41,10 @@ public:
 	virtual ~ParticleGenerator();
 
 	void createForceGenerators();
-
 	ForceGenerator* getForceGenerator(string name);
+	virtual void update(double t);
 
-	virtual void update(double t) = 0;
+	void setMode(int i);
+	void clearPaticles();
 };
 
