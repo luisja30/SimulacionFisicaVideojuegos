@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "ForceGenerator.h"
 #include "GravityForceGenerator.h"
+#include "WindForceGenerator.h"
 #include "ParticleForceRegistry.h"
 #include <random>
 #include <list>
@@ -18,7 +19,8 @@ enum TypeForce {
 enum GenerateMode {
 	RAIN,
 	MIST,
-	HOSE
+	HOSE,
+	DEFAULT
 };
 
 class ParticleGenerator {

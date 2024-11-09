@@ -33,6 +33,7 @@ public:
 
 	//Getters
 	Vector3 getPosition() const;
+	Vector3 getVel() const;
 	double getMass() const;
 	double getInvMass() const;
 

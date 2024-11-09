@@ -107,8 +107,8 @@ void initPhysics(bool interactive)
 	//hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
 	//mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
 
-	particleSys_ = new ParticleGenerator(Vector3(0, 150, 0), 1000);
-	particleSys_->setMode(0);
+	particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
+	particleSys_->setMode(3);
 
 }
 
@@ -220,6 +220,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}*/
 		particleSys_->setMode(2);
 		break;
+	}
+	case 'V': {
+		particleSys_->setMode(3);
 	}
 	default:
 		break;

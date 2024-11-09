@@ -77,6 +77,10 @@ Vector3 Particle::getPosition() const {
 	return pose_.p;
 }
 
+Vector3 Particle::getVel() const {
+	return vel_;
+}
+
 double Particle::getMass() const {
 	return mass_;
 }

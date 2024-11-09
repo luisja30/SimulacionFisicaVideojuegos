@@ -27,6 +27,7 @@ void ParticleGenerator::createForceGenerators() {
 	forceGen_.push_back(new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY"));
 
 	//Viento 
+	forceGen_.push_back(new WindForceGenerator(origin_ + Vector3(0, -150,0), Vector3(0, 100, 0), 70.0f, 0.5f, 0.0f, "WIND"));
 	
 	//Tornado
 
@@ -58,9 +59,9 @@ void ParticleGenerator::generateParticle() {
 	case RAIN:
 		radius = 100;
 		//Generamos una posicion aletaria en X y Z
-		newPos.x += std::normal_distribution<double>(- radius, radius)(rd);
+		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.y = origin_.y;
-		newPos.z += std::normal_distribution<double>(- radius, radius)(rd);
+		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
 		//Vector3 newPos = Vector3(posX, posY, posZ);
 
 		//Las particulas se mueven solo en el eje Y
@@ -113,6 +114,24 @@ void ParticleGenerator::generateParticle() {
 		newParticle->setColor({ 0,0,1,1 });
 		particles_.push_back(newParticle);
 		break;
+	case DEFAULT:
+		radius = 10;
+		newPos.x += std::normal_distribution<double>(-radius, radius + 30)(rd);
+		newPos.y = origin_.y;
+		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
+		//Vector3 newPos = Vector3(posX, posY, posZ);
+
+		//Las particulas se mueven solo en el eje Y
+		newVel.y = -50;
+
+		//Añadimos particula
+		newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
+		newParticle->setColor({ 0,0,1,1 });
+		particles_.push_back(newParticle);
+
+		forceReg_->addRegistry(getForceGenerator("WIND"), newParticle);
+
+		break;
 	}
 }
 
@@ -142,6 +161,9 @@ void ParticleGenerator::setMode(int i) {
 		break;
 	case 2:
 		genMode_ = HOSE;
+		break;
+	case 3:
+		genMode_ = DEFAULT;
 		break;
 	}
 	clearPaticles();
