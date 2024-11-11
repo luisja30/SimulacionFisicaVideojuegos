@@ -108,7 +108,7 @@ void initPhysics(bool interactive)
 	//mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
 
 	particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
-	particleSys_->setMode(3);
+	particleSys_->setMode(4);
 
 }
 
@@ -172,57 +172,31 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
-	switch(toupper(key))
-	{
+	switch (toupper(key)) {
+	//case ' ':	break;
 	case 'B': {
 		particles_.push_back(new Projectile(Vector3(camera.p), Vector3(-100, 0, -100), Vector3(0, 0, 0)));
 		break;
 	}
-	//case ' ':	break;
 	case 'Z': {
-		//LLuvia
-		/*if(rainGen_ == nullptr) rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
-		if (mistGen_ != nullptr) {
-			delete mistGen_;
-			mistGen_ = nullptr;
-		}
-		if (hoseGen_ != nullptr) {
-			delete hoseGen_;
-			hoseGen_ = nullptr;
-		}*/
 		particleSys_->setMode(0);
 		break;
 	}
 	case 'X': {
-		//Manguera
-		/*if (hoseGen_ == nullptr)hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
-		if (rainGen_ != nullptr) {
-			delete rainGen_;
-			rainGen_ = nullptr;
-		}
-		if (mistGen_ != nullptr) {
-			delete mistGen_;
-			mistGen_ = nullptr;
-		}*/
 		particleSys_->setMode(1);
 		break;
 	}
 	case 'C': {
-		//Niebla
-		/*if (mistGen_ == nullptr)mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
-		if (rainGen_ != nullptr) {
-			delete rainGen_;
-			rainGen_ = nullptr;
-		}
-		if (hoseGen_ != nullptr) {
-			delete hoseGen_;
-			hoseGen_ = nullptr;
-		}*/
 		particleSys_->setMode(2);
 		break;
 	}
 	case 'V': {
 		particleSys_->setMode(3);
+		break;
+	}
+	case 'N': {
+		particleSys_->setMode(4);
+		break;
 	}
 	default:
 		break;

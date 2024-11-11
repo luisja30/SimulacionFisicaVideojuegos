@@ -4,5 +4,5 @@ C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojueg
 C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\common\PhysX-3.4\PxShared\include\task\PxTask.h(326,19): message : vea la declaración de 'physx::PxLightCpuTask::mRefCount'
 C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\Practica 3\Particle.h(28,3): warning C4265: "Particle": la clase tiene funciones virtuales, pero su destructor no trivial no es virtual; puede que las instancias de esta clase no se destruyan correctamente
 C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\Practica 3\ForceGenerator.h(12,52): warning C5038: miembro de datos "ForceGenerator::name_" se inicializará después de miembro de datos "ForceGenerator::t_"
-C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\Practica 3\ParticleGenerator.cpp(146,76): warning C5219: conversión implícita de "int" a "float"; posible pérdida de datos
+C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\Practica 3\ParticleGenerator.cpp(163,76): warning C5219: conversión implícita de "int" a "float"; posible pérdida de datos
   game.vcxproj -> C:\Users\luisj\OneDrive\Escritorio\Repositorios GitHub\SimulacionFisicaVideojuegos\bin\gameDEBUG.exe

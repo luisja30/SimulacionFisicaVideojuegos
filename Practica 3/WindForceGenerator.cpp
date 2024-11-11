@@ -1,7 +1,7 @@
 #include "WindForceGenerator.h"
 
 WindForceGenerator::WindForceGenerator(Vector3 pos, Vector3 vel, float size, float k1, float k2, string name)
-	:ForceGenerator(pos, name), vel_(vel), size_(size), k1_(k1), k2_(k2), drawZone_(true) {
+	:ForceGenerator(pos, name), vel_(vel), size_(size), k1_(k1), k2_(k2), drawZone_(false) {
 	if (drawZone_) {
 		//Renderizamos una caja sobre la que ver la zona de accion de la fuerza
 		PxTransform pose(pos.x, pos.y, pos.z);

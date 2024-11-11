@@ -7,11 +7,9 @@ WhirlwindForceGenerator::WhirlwindForceGenerator(Vector3 pos, float size, float 
 void WhirlwindForceGenerator::updateForce(Particle* p) {
 	if (insideLimits(p->getPosition())) {
 		Vector3 pPos = p->getPosition();
-		Vector3 distanceDiff = Vector3(-(pPos.z - pos_.z),
-			50 - (pPos.y - pos_.y),
-			pPos.x - pos_.x);
-		Vector3 vel = k_ * distanceDiff;
-		p->addForce(vel);
+		Vector3 distanceDiff = Vector3(-(pPos.z - pos_.z), 50 - (pPos.y - pos_.y), pPos.x - pos_.x);
+		Vector3 force = k_ * distanceDiff;
+		p->addForce(force);
 	}
 }
 

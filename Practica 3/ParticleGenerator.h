@@ -5,6 +5,7 @@
 #include "GravityForceGenerator.h"
 #include "WindForceGenerator.h"
 #include "WhirlwindForceGenerator.h"
+#include "ExplosionForceGenerator.h"
 #include "ParticleForceRegistry.h"
 #include <random>
 #include <list>
@@ -21,7 +22,8 @@ enum GenerateMode {
 	RAIN,
 	MIST,
 	HOSE,
-	DEFAULT
+	DEFAULT,
+	DEFAULT_2
 };
 
 class ParticleGenerator {

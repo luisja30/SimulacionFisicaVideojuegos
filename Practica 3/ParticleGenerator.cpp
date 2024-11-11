@@ -33,7 +33,7 @@ void ParticleGenerator::createForceGenerators() {
 	forceGen_.push_back(new WhirlwindForceGenerator(origin_, 100.0f, 0.5f, "TORNADO"));
 
 	//Explosion
-
+	forceGen_.push_back(new ExplosionForceGenerator(origin_, 80, 10000, 0.1, "EXPLOSION"));
 }
 
 ForceGenerator* ParticleGenerator::getForceGenerator(string name) {
@@ -133,6 +133,23 @@ void ParticleGenerator::generateParticle() {
 		//forceReg_->addRegistry(getForceGenerator("WIND"), newParticle);
 		forceReg_->addRegistry(getForceGenerator("TORNADO"), newParticle);
 		break;
+
+	case DEFAULT_2:
+
+		radius = 50;
+		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
+		newPos.y = origin_.y;
+		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
+
+		//Añadimos particula
+		newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
+		newParticle->setColor({ 1,0,0,1 });
+		particles_.push_back(newParticle);
+
+		forceReg_->addRegistry(getForceGenerator("EXPLOSION"), newParticle);
+
+		break;
+
 	}
 }
 
@@ -166,6 +183,9 @@ void ParticleGenerator::setMode(int i) {
 	case 3:
 		genMode_ = DEFAULT;
 		break;
+	case 4:
+		genMode_ = DEFAULT_2;
+		break;
 	}
 	clearPaticles();
 }
@@ -177,11 +197,6 @@ void ParticleGenerator::clearPaticles() {
 		delete particles_.front();
 		particles_.pop_front();
 	}
-
-	/*for (Particle* p : particles_) {
-		delete p;
-	}
-	particles_.clear();*/
 }
 
 
