@@ -11,6 +11,8 @@ protected:
 	//Área de viento
 	float size_;
 	RenderItem* renderItem_;
+
+	bool drawZone_;
 public:
 	WindForceGenerator(Vector3 pos, Vector3 vel, float size, float k1, float k2, string name);
 	virtual void updateForce(Particle* p) override;

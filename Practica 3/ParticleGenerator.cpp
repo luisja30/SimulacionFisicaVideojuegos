@@ -27,11 +27,13 @@ void ParticleGenerator::createForceGenerators() {
 	forceGen_.push_back(new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY"));
 
 	//Viento 
-	forceGen_.push_back(new WindForceGenerator(origin_ + Vector3(0, -150,0), Vector3(0, 100, 0), 70.0f, 0.5f, 0.0f, "WIND"));
+	forceGen_.push_back(new WindForceGenerator(origin_, Vector3(50, 100, 0), 70.0f, 1.0f, 0.0f, "WIND"));
 	
 	//Tornado
+	forceGen_.push_back(new WhirlwindForceGenerator(origin_, 100.0f, 0.5f, "TORNADO"));
 
 	//Explosion
+
 }
 
 ForceGenerator* ParticleGenerator::getForceGenerator(string name) {
@@ -116,10 +118,9 @@ void ParticleGenerator::generateParticle() {
 		break;
 	case DEFAULT:
 		radius = 10;
-		newPos.x += std::normal_distribution<double>(-radius, radius + 30)(rd);
+		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.y = origin_.y;
 		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
-		//Vector3 newPos = Vector3(posX, posY, posZ);
 
 		//Las particulas se mueven solo en el eje Y
 		newVel.y = -50;
@@ -129,8 +130,8 @@ void ParticleGenerator::generateParticle() {
 		newParticle->setColor({ 0,0,1,1 });
 		particles_.push_back(newParticle);
 
-		forceReg_->addRegistry(getForceGenerator("WIND"), newParticle);
-
+		//forceReg_->addRegistry(getForceGenerator("WIND"), newParticle);
+		forceReg_->addRegistry(getForceGenerator("TORNADO"), newParticle);
 		break;
 	}
 }

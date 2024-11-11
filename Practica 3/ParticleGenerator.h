@@ -4,6 +4,7 @@
 #include "ForceGenerator.h"
 #include "GravityForceGenerator.h"
 #include "WindForceGenerator.h"
+#include "WhirlwindForceGenerator.h"
 #include "ParticleForceRegistry.h"
 #include <random>
 #include <list>

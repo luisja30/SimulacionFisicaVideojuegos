@@ -1,11 +1,12 @@
 #include "WindForceGenerator.h"
 
 WindForceGenerator::WindForceGenerator(Vector3 pos, Vector3 vel, float size, float k1, float k2, string name)
-	:ForceGenerator(pos, name), vel_(vel), size_(size), k1_(k1), k2_(k2) {
-
-	//Creamos una esfera invisible sobre la que ver la zona de accion de la fuerza
-	PxTransform pose(pos_.x, pos_.y, pos_.z);
-	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(size)), &pose, {1.0, 0.0, 1.0, 0.0});
+	:ForceGenerator(pos, name), vel_(vel), size_(size), k1_(k1), k2_(k2), drawZone_(true) {
+	if (drawZone_) {
+		//Renderizamos una caja sobre la que ver la zona de accion de la fuerza
+		PxTransform pose(pos.x, pos.y, pos.z);
+		renderItem_ = new RenderItem(CreateShape(PxBoxGeometry(size, 1, size)), &pose, { 0.0, 1.0, 1.0, 0.0 });
+	}
 }
 
 void WindForceGenerator::updateForce(Particle* p) {
