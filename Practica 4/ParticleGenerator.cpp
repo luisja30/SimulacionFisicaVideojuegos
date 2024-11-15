@@ -27,7 +27,7 @@ void ParticleGenerator::createForceGenerators() {
 	invGF_ = new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY");
 
 	//Viento
-	windF_ = new WindForceGenerator(origin_, Vector3(50, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
+	windF_ = new WindForceGenerator(origin_, Vector3(0, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
 
 	//Tornado
 	tornadoF_ = new WhirlwindForceGenerator(origin_, 100.0f, 0.5f, "TORNADO");
@@ -160,8 +160,11 @@ void ParticleGenerator::generateParticle() {
 }
 
 void ParticleGenerator::update(double t) {
-	generateParticle();
+	if(genMode_ != NULLMODE)
+		generateParticle();
+
 	forceReg_->updateForces();
+
 	for (auto it = particles_.begin(); it != particles_.end(); it++) {
 		if (*it != nullptr) {
 			(*it)->integrate(t);
@@ -176,6 +179,8 @@ void ParticleGenerator::update(double t) {
 }
 
 void ParticleGenerator::setMode(int i) {
+
+	clearPaticles();
 	switch (i) {
 	case 0:
 		genMode_ = RAIN;
@@ -192,8 +197,11 @@ void ParticleGenerator::setMode(int i) {
 	case 4:
 		genMode_ = DEFAULT_2;
 		break;
+	case 5:
+		genMode_ = NULLMODE;
+		generateSpringDemo();
+		break;
 	}
-	clearPaticles();
 }
 
 //Solamente limpia las particulas
@@ -203,6 +211,19 @@ void ParticleGenerator::clearPaticles() {
 		delete particles_.front();
 		particles_.pop_front();
 	}
+}
+
+void ParticleGenerator::generateSpringDemo() {
+	Particle* p1 = new Particle(Vector3(0, -20, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), 2.0f, 100, 1.0, SPHERE);
+	p1->setColor({ 1.0,0.0,0.0,1.0 });
+	AnchoredSpringFG* fAnchor = new AnchoredSpringFG(2, 20, Vector3(0, 20, 0));
+
+	//forceReg_->addRegistry(windF_, p1);
+	forceReg_->addRegistry(gF_, p1);
+	forceReg_->addRegistry(fAnchor, p1);
+
+	forceGen_.push_back(fAnchor);
+	particles_.push_back(p1);
 }
 
 

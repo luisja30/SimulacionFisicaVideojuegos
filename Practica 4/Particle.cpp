@@ -24,6 +24,17 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double alive
 	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
 }
 
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass, particleForm form)
+	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(aliveTime), isAlive_(true) {
+	setMass(mass);
+	force_ = { 0,0,0 };
+	if (form == BOX)
+		renderItem_ = new RenderItem(CreateShape(PxBoxGeometry(r, r, r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+	else
+		renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+
+}
+
 Particle::~Particle() {
 	renderItem_->release();
 	renderItem_ = nullptr;

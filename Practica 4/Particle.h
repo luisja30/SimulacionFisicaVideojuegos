@@ -6,6 +6,11 @@
 #include <iostream>
 using namespace physx;
 
+enum particleForm {
+	SPHERE,
+	BOX
+};
+
 class Particle {
 protected:
 	Vector3 vel_, acel_;
@@ -25,6 +30,7 @@ public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass);
+	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass, particleForm form);
 	~Particle();
 	
 	//Setters

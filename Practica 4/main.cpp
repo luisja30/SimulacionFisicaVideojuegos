@@ -83,7 +83,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
-	particleSys_->setMode(4);
+	particleSys_->setMode(5);
 }
 
 
@@ -162,6 +162,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'N': {
 		particleSys_->setMode(4);
+		break;
+	}
+	case 'M': {
+		particleSys_->setMode(5);
 		break;
 	}
 	default:

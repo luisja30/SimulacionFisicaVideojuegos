@@ -6,6 +6,8 @@
 #include "WindForceGenerator.h"
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "SpringForceGenerator.h"
+#include "AnchoredSpringFG.h"
 #include "ParticleForceRegistry.h"
 #include <random>
 #include <list>
@@ -15,7 +17,8 @@ enum GenerateMode {
 	MIST,
 	HOSE,
 	DEFAULT,
-	DEFAULT_2
+	DEFAULT_2,
+	NULLMODE
 };
 
 class ParticleGenerator {
@@ -49,5 +52,7 @@ public:
 
 	void setMode(int i);
 	void clearPaticles();
+
+	void generateSpringDemo();
 };
 
