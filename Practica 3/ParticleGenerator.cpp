@@ -23,17 +23,23 @@ ParticleGenerator::~ParticleGenerator() {
 
 void ParticleGenerator::createForceGenerators() {
 	//Fuerza gravitatoria
-	forceGen_.push_back(new GravityForceGenerator(Vector3(0, -9.8, 0), "GRAVITY"));
-	forceGen_.push_back(new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY"));
+	gF_ = new GravityForceGenerator(Vector3(0, -9.8, 0), "GRAVITY");
+	invGF_ = new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY");
 
-	//Viento 
-	forceGen_.push_back(new WindForceGenerator(origin_, Vector3(50, 100, 0), 70.0f, 1.0f, 0.0f, "WIND"));
-	
+	//Viento
+	windF_ = new WindForceGenerator(origin_, Vector3(50, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
+
 	//Tornado
-	forceGen_.push_back(new WhirlwindForceGenerator(origin_, 100.0f, 0.5f, "TORNADO"));
+	tornadoF_ = new WhirlwindForceGenerator(origin_, 100.0f, 0.5f, "TORNADO");
 
 	//Explosion
-	forceGen_.push_back(new ExplosionForceGenerator(origin_, 80, 10000, 0.1, "EXPLOSION"));
+	explosionF_ = new ExplosionForceGenerator(origin_, 10000000, 1000, 900000, "EXPLOSION");
+
+	forceGen_.push_back(gF_);
+	forceGen_.push_back(invGF_);
+	forceGen_.push_back(windF_);
+	forceGen_.push_back(tornadoF_);
+	forceGen_.push_back(explosionF_);
 }
 
 ForceGenerator* ParticleGenerator::getForceGenerator(string name) {
@@ -75,7 +81,7 @@ void ParticleGenerator::generateParticle() {
 		particles_.push_back(newParticle);
 
 		//Adherimos una fuerza a la particula
-		forceReg_->addRegistry(getForceGenerator("GRAVITY"), newParticle);
+		forceReg_->addRegistry(gF_, newParticle);
 		break;
 
 	case MIST:
@@ -130,15 +136,15 @@ void ParticleGenerator::generateParticle() {
 		newParticle->setColor({ 0,0,1,1 });
 		particles_.push_back(newParticle);
 
-		//forceReg_->addRegistry(getForceGenerator("WIND"), newParticle);
-		forceReg_->addRegistry(getForceGenerator("TORNADO"), newParticle);
+		//forceReg_->addRegistry(windF_, newParticle);
+		forceReg_->addRegistry(tornadoF_, newParticle);
 		break;
 
 	case DEFAULT_2:
-
-		radius = 50;
+		//Para explosion
+		radius = 5;
 		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
-		newPos.y = origin_.y;
+		newPos.y += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
 
 		//Añadimos particula
@@ -146,7 +152,7 @@ void ParticleGenerator::generateParticle() {
 		newParticle->setColor({ 1,0,0,1 });
 		particles_.push_back(newParticle);
 
-		forceReg_->addRegistry(getForceGenerator("EXPLOSION"), newParticle);
+		forceReg_->addRegistry(explosionF_, newParticle);
 
 		break;
 

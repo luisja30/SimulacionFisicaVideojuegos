@@ -82,34 +82,8 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-
-	//Practica 0
-	/*Vector3D ejeX(10, 0, 0), ejeY(0, 10, 0), ejeZ(0, 0, 10);
-
-	transformAxisX = PxTransform(ejeX.getX(), ejeX.getY(), ejeX.getZ());
-	transformAxisY = PxTransform(ejeY.getX(), ejeY.getY(), ejeY.getZ());
-	transformAxisZ = PxTransform(ejeZ.getX(), ejeZ.getY(), ejeZ.getZ());
-	transformCenter = PxTransform(0, 0, 0);*/
-
-	//renderItemCenter = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformCenter, { 1.0,1.0,1.0,1.0 });
-	//renderItemX = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisX, { 1.0,0.0,0.0,1.0 });
-	//renderItemY = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisY, { 0.0,1.0,0.0,1.0 });
-	//renderItemZ = new RenderItem(CreateShape(PxSphereGeometry(1.0f)), &transformAxisZ, { 0.0,0.0,1.0,1.0 });
-
-
-	//Practica 1
-	//particula_ = new Particle(Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(20, 0, 0));
-	//particula_->setColor({ 1.0,0.0,0.0,1.0 });
-
-	//Practica 2
-	//particleSys_ = new ParticleGenerator(Vector3(0, 70, -90), Vector3(0, 10, 0), Vector3(0, 1, 0), 300);
-	//rainGen_ = new RainGenerator(Vector3(0, 150, 0), 100);
-	//hoseGen_ = new HoseGenerator(Vector3(-30, 150, -300), 1000);
-	//mistGen_ = new MistGenerator(Vector3(0, 50, 0), 50);
-
 	particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
 	particleSys_->setMode(4);
-
 }
 
 
@@ -125,8 +99,8 @@ void stepPhysics(bool interactive, double t)
 	/*if(proyectil_ != nullptr) 
 		proyectil_->integrate(t);*/
 
-	//Lista de particulas
-	/*for (int i = 0; i < particles_.size(); i++) {
+	//Lista de particulas (proyectiles)
+	for (int i = 0; i < particles_.size(); i++) {
 		if (particles_[i] != nullptr) {
 			particles_[i]->integrate(t);
 			if (particles_[i]->isGrounded()) {
@@ -134,17 +108,9 @@ void stepPhysics(bool interactive, double t)
 				particles_[i] = nullptr;
 			}
 		}
-	}*/
+	}
 
 	particleSys_->update(t);
-	/*if (rainGen_ != nullptr)
-		rainGen_->update(t);
-
-	if (hoseGen_ != nullptr)
-		hoseGen_->update(t);
-
-	if (mistGen_ != nullptr)
-		mistGen_->update(t);*/
 }
 
 // Function to clean data

@@ -10,14 +10,6 @@
 #include <random>
 #include <list>
 
-enum TypeForce {
-	GRAVITY,
-	INVERSE_GRAVITY,
-	WIND,
-	TORNADO,
-	EXPLOSION
-};
-
 enum GenerateMode {
 	RAIN,
 	MIST,
@@ -40,6 +32,12 @@ protected:
 	//Fuerzas
 	std::vector<ForceGenerator*> forceGen_;
 	ParticleForceRegistry* forceReg_;
+
+	GravityForceGenerator* gF_;
+	GravityForceGenerator* invGF_;
+	WindForceGenerator* windF_;
+	WhirlwindForceGenerator* tornadoF_;
+	ExplosionForceGenerator* explosionF_;
 
 public:
 	ParticleGenerator(Vector3 pos, double range);
