@@ -8,7 +8,8 @@ using namespace physx;
 
 enum particleForm {
 	SPHERE,
-	BOX
+	BOX,
+	PLANE
 };
 
 class Particle {
@@ -19,6 +20,7 @@ protected:
 	double dumping_; // 0 < d < 1
 	double aliveTime_;
 	bool isAlive_;
+	bool semi_;
 	float radius_;
 
 	//Fuerzas
@@ -36,6 +38,7 @@ public:
 	//Setters
 	void setColor(Vector4 color);
 	void setMass(double m);
+	void setSemiEuler();
 
 	//Getters
 	Vector3 getPosition() const;

@@ -16,7 +16,7 @@
 
 #include <iostream>
 
-std::string display_text = "This is a test";
+std::string display_text = "";
 
 
 using namespace physx;
@@ -53,10 +53,6 @@ Projectile* proyectil_ = NULL;
 std::vector<Particle*> particles_;
 
 ParticleGenerator* particleSys_ = NULL;
-ParticleGenerator* particleSysV2_ = NULL;
-RainGenerator* rainGen_ = NULL;
-HoseGenerator* hoseGen_ = NULL;
-MistGenerator* mistGen_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -164,10 +160,47 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSys_->setMode(4);
 		break;
 	}
-	case 'M': {
+	case '5': {
 		particleSys_->setMode(5);
 		break;
 	}
+	case '6': {
+		particleSys_->setMode(6);
+		break;
+	}
+	case '7': {
+		particleSys_->setMode(7);
+		break;
+	}
+	case '8': {
+		particleSys_->setMode(8);
+		break;
+	}
+	case '-': {
+		particleSys_->changeK('-');
+		break;
+	}
+	case '+': {
+		particleSys_->changeK('+');
+		break;
+	}
+	case '.': {
+		particleSys_->changeVolume('.');
+		break;
+	}
+	case ',': {
+		particleSys_->changeVolume(',');
+		break;
+	}
+	case '0': {
+		particleSys_->changeMass('0');
+		break;
+	}
+	case '9': {
+		particleSys_->changeMass('9');
+		break;
+	}
+
 	default:
 		break;
 	}

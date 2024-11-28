@@ -18,7 +18,12 @@ void ParticleForceRegistry::deleteParticleRegistry(Particle* p) {
 			it = registryForces_.erase(it);
 		else it++;
 	}
-};
+}
+
+void ParticleForceRegistry::deleteForceRegistry(ForceGenerator* fg) {
+	registryForces_.erase(fg);
+}
+
 
 void ParticleForceRegistry::updateForces() {
 	//Aplicamos la fuerza correspondiente a la particula

@@ -8,6 +8,7 @@
 #include "ExplosionForceGenerator.h"
 #include "SpringForceGenerator.h"
 #include "AnchoredSpringFG.h"
+#include "BuoyancyForceGenerator.h"
 #include "ParticleForceRegistry.h"
 #include <random>
 #include <list>
@@ -16,9 +17,9 @@ enum GenerateMode {
 	RAIN,
 	MIST,
 	HOSE,
-	DEFAULT,
-	DEFAULT_2,
-	NULLMODE
+	TORNADO,
+	EXPLOSION,
+	SPRING_MODE
 };
 
 class ParticleGenerator {
@@ -34,25 +35,44 @@ protected:
 
 	//Fuerzas
 	std::vector<ForceGenerator*> forceGen_;
-	ParticleForceRegistry* forceReg_;
+	ParticleForceRegistry* forceRegistry_;
 
+	//Tipos de Fuerzas
 	GravityForceGenerator* gF_;
 	GravityForceGenerator* invGF_;
 	WindForceGenerator* windF_;
 	WhirlwindForceGenerator* tornadoF_;
 	ExplosionForceGenerator* explosionF_;
 
+	//Muelles
+	AnchoredSpringFG* anchoredfg_;
+	SpringForceGenerator* springfg_;
+	BuoyancyForceGenerator* bfg_;
+
+
 public:
 	ParticleGenerator(Vector3 pos, double range);
 	virtual ~ParticleGenerator();
 
-	void createForceGenerators();
-	ForceGenerator* getForceGenerator(string name);
 	virtual void update(double t);
 
-	void setMode(int i);
-	void clearPaticles();
+	void createForceGenerators();
+	ForceGenerator* getForceGenerator(string name);
+	void createExplosion(int n);
 
-	void generateSpringDemo();
+	void setMode(int i);
+	void resetScene();
+	void clearParticles();
+	void clearForces();
+
+	//Muelles
+	void generateSpringAnchoredDemo();
+	void generateSpringDemo(bool elastic);
+	void generateBuoyancyDemo();
+
+	//Modificadores para muelles y particulas
+	void changeK(char k);
+	void changeVolume(char v);
+	void changeMass(char m);
 };
 

@@ -14,6 +14,7 @@ public:
 	virtual ~ParticleForceRegistry();
 	void addRegistry(ForceGenerator* forceGen, Particle* p);
 	void deleteParticleRegistry(Particle* p);
+	void deleteForceRegistry(ForceGenerator* fg);
 	void updateForces();
 };
 
