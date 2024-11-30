@@ -13,6 +13,8 @@
 #include "RainGenerator.h"
 #include "HoseGenerator.h"
 #include "MistGenerator.h"
+#include "RigidBody.h"
+#include "RigidSystem.h"
 
 #include <iostream>
 
@@ -53,6 +55,8 @@ Projectile* proyectil_ = NULL;
 std::vector<Particle*> particles_;
 
 ParticleGenerator* particleSys_ = NULL;
+RigidBody* rb_ = NULL;
+RigidSystem* rigidSys_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -78,8 +82,20 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
-	particleSys_->setMode(5);
+	//particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
+	//particleSys_->setMode(5);
+
+	//rb_ = new RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(3,3,3)), Vector3(0, 30,0), 1.0, 1.0, Vector4(0, 0, 1, 1));
+
+	//Suelo
+	/*PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,0,0}));
+	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	suelo->attachShape(*shape);
+	gScene->addActor(*suelo);
+	RenderItem* item;
+	item = new RenderItem(shape, suelo, { 0,1,1,1 });*/
+
+	rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0));
 }
 
 
@@ -106,7 +122,8 @@ void stepPhysics(bool interactive, double t)
 		}
 	}
 
-	particleSys_->update(t);
+	//particleSys_->update(t);
+	rigidSys_->update(t);
 }
 
 // Function to clean data
@@ -140,7 +157,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particles_.push_back(new Projectile(Vector3(camera.p), Vector3(-100, 0, -100), Vector3(0, 0, 0)));
 		break;
 	}
-	case 'Z': {
+	/*case 'Z': {
 		particleSys_->setMode(0);
 		break;
 	}
@@ -199,11 +216,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '9': {
 		particleSys_->changeMass('9');
 		break;
-	}
+	}*/
 
 	default:
 		break;
 	}
+
+	rigidSys_->keyPressed(key);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

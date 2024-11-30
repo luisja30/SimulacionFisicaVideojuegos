@@ -81,6 +81,7 @@ void ParticleGenerator::generateParticle() {
 	double radius = 0;
 	double newLifeTime = 0;
 	Particle* newParticle = nullptr;
+	double newMass = 1;
 
 	switch (genMode_) {
 	case RAIN:
@@ -142,6 +143,24 @@ void ParticleGenerator::generateParticle() {
 		particles_.push_back(newParticle);
 		break;
 
+	case WIND:
+		radius = 10;
+		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
+		newPos.y = origin_.y;
+		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
+
+		//Añadimos particula
+		newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
+		newParticle->setColor({ 0,0,1,1 });
+
+		/*newMass = std::normal_distribution<double>(1.0, 20.0)(rd);
+		newParticle->setMass(newMass);*/
+
+		particles_.push_back(newParticle);
+
+		forceRegistry_->addRegistry(windF_, newParticle);
+		break;
+
 	case TORNADO:
 		radius = 10;
 		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
@@ -153,10 +172,9 @@ void ParticleGenerator::generateParticle() {
 
 		//Añadimos particula
 		newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
-		newParticle->setColor({ 0,0,1,1 });
+		newParticle->setColor({ 0,1,1,1 });
 		particles_.push_back(newParticle);
 
-		//forceReg_->addRegistry(windF_, newParticle);
 		forceRegistry_->addRegistry(tornadoF_, newParticle);
 		break;
 	}
@@ -195,7 +213,7 @@ void ParticleGenerator::setMode(int i) {
 		genMode_ = MIST;
 		break;
 	case 2:
-		genMode_ = HOSE;
+		genMode_ = WIND;
 		break;
 
 	//Fuerzas P3
@@ -278,8 +296,8 @@ void ParticleGenerator::generateSpringAnchoredDemo() {
 
 void ParticleGenerator::generateSpringDemo(bool elastic) {
 	//Dos particulas unidas mediente un muelle
-	Particle* p1 = new Particle(Vector3(50, 25, 0), Vector3(0), Vector3(0), 2.0f, 100, 1.0, SPHERE);
-	Particle* p2 = new Particle(Vector3(-50, 25, 5), Vector3(0), Vector3(0), 2.0f, 100, 1.0, SPHERE);
+	Particle* p1 = new Particle(Vector3(20, 10, 0), Vector3(0), Vector3(0), 2.0f, 100, 1.0, SPHERE);
+	Particle* p2 = new Particle(Vector3(0, 10, 0), Vector3(0), Vector3(0), 2.0f, 100, 1.0, SPHERE);
 	Particle* p3 = new Particle(Vector3(0, 50, -5), Vector3(0), Vector3(0), 2.0f, 100, 1.0, SPHERE);
 	Particle* p4 = new Particle(Vector3(0, 0, -5), Vector3(0), Vector3(0), 2.0f, 100, 1.0, SPHERE);
 
@@ -288,10 +306,12 @@ void ParticleGenerator::generateSpringDemo(bool elastic) {
 	p3->setColor({ 1.0,0.0,0.0,1.0 });
 	p4->setColor({ 1.0,1.0,0.0,1.0 });
 
-	SpringForceGenerator* sfg1 = new SpringForceGenerator(Vector3(0, 25, 0), 4, 10, p2, elastic);
-	SpringForceGenerator* sfg2 = new SpringForceGenerator(Vector3(0, 25, 0), 4, 10, p1, elastic);
-	SpringForceGenerator* sfg3 = new SpringForceGenerator(Vector3(0, 25, 0), 4, 10, p4, elastic);
-	SpringForceGenerator* sfg4 = new SpringForceGenerator(Vector3(0, 25, 0), 4, 10, p3, elastic);
+	//p2->setMass(2.0);
+
+	SpringForceGenerator* sfg1 = new SpringForceGenerator(Vector3(0, 10, 0), 1, 10, p2, elastic);
+	SpringForceGenerator* sfg2 = new SpringForceGenerator(Vector3(0, 10, 0), 1, 10, p1, elastic);
+	SpringForceGenerator* sfg3 = new SpringForceGenerator(Vector3(0, 25, 0), 1, 30, p4, elastic);
+	SpringForceGenerator* sfg4 = new SpringForceGenerator(Vector3(0, 25, 0), 1, 30, p3, elastic);
 
 	//GravityForceGenerator* gF = new GravityForceGenerator(Vector3(0, -9.8, 0), "GRAVITY");
 	//WindForceGenerator* wfg = new WindForceGenerator(origin_, Vector3(0, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
@@ -319,16 +339,36 @@ void ParticleGenerator::generateSpringDemo(bool elastic) {
 }
 
 void ParticleGenerator::generateBuoyancyDemo() {
-	Particle* p1 = new Particle({ 0.0, 30, 0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p1->setMass(1.0);
-	p1->setColor({ 1.0,1.0,0.0,1.0 });
+	Particle* p1 = new Particle({ 0.0, 20, 0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
+	p1->setMass(500);
+	p1->setSemiEuler();
+	p1->setColor({ 1.0,1.0,0.0,1.0 }); //Amarilla
+	
+	Particle* p2 = new Particle({ 0.0, 20, -10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
+	p2->setMass(100);
+	p2->setSemiEuler();
+	p2->setColor({ 1.0,0.0,0.0,1.0 }); //Roja
+	
+	Particle* p3 = new Particle({ 0.0, 20, 10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
+	p3->setMass(1000);
+	p3->setSemiEuler();
+	p3->setColor({ 1.0,0.0,1.0,1.0 }); //Morada
 
-	bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 3.0, 0.01, 1000);
+	bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
 
 	forceGen_.push_back(bfg_);
 	particles_.push_back(p1);
+	particles_.push_back(p2);
+	particles_.push_back(p3);
+
 	forceRegistry_->addRegistry(bfg_, p1);
 	forceRegistry_->addRegistry(gF_, p1);
+
+	forceRegistry_->addRegistry(bfg_, p2);
+	forceRegistry_->addRegistry(gF_, p2);
+
+	forceRegistry_->addRegistry(bfg_, p3);
+	forceRegistry_->addRegistry(gF_, p3);
 }
 
 void ParticleGenerator::changeK(char k) {
@@ -386,7 +426,3 @@ void ParticleGenerator::changeMass(char m) {
 		it++;
 	}
 }
-
-
-
-

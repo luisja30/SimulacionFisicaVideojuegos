@@ -17,6 +17,7 @@ enum GenerateMode {
 	RAIN,
 	MIST,
 	HOSE,
+	WIND,
 	TORNADO,
 	EXPLOSION,
 	SPRING_MODE
