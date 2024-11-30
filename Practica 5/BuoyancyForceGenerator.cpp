@@ -4,7 +4,7 @@ BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, float h, float V, fl
 	ForceGenerator(pos, "BUOYANCY"), height_(h), volume_(V), liquid_density_(d) {
 
 	//Superficie de flotación
-	liquid_particle = new Particle(pos, { 0,0,0 }, { 0,0,0 }, 3, 1000, 1.0, PLANE);
+	liquid_particle = new Particle(pos, { 0,0,0 }, { 0,0,0 }, 10, 1000, 1.0, PLANE);
 	liquid_particle->setColor({ 0.0,1.0,1.0,1.0 });
 }
 
