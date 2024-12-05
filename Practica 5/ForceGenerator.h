@@ -1,5 +1,6 @@
 #pragma once
 #include "Particle.h"
+#include "RigidBody.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ public:
 	virtual ~ForceGenerator() {};
 
 	virtual void updateForce(Particle* p) = 0;
+	virtual void updateForce(RigidBody* r) = 0;
 
 	/*void updateTime(double t) {
 		t_ += t;

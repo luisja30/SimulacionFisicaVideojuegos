@@ -6,7 +6,6 @@
 #include <iostream>
 using namespace physx;
 
-
 class RigidBody {
 protected:
 	PxPhysics* gPhysics_;
@@ -14,7 +13,7 @@ protected:
 	PxShape* shape_;
 	PxRigidDynamic* rigidDynamic_;
 
-	Vector3 vel_, acel_;
+	Vector3 vel_, acel_, posIni_;
 	Vector4 color_;
 
 	physx::PxTransform pose_;
@@ -33,10 +32,11 @@ protected:
 public:
 	RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp ,Vector3 pos, double m, double v, Vector4 c);
 	virtual ~RigidBody();
-	void update(double t);
+	bool integrate(double t);
 	
 	Vector3 getPosition();
 	inline bool getAlive() const { return isAlive_; };
+	bool insideLimits();
 
 
 	void setVelocity(Vector3 vel);

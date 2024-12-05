@@ -28,7 +28,7 @@ protected:
 	Vector3 pos_;
 	std::list<RigidBody*> rigidBodies_;
 	int rigidCount_ = 0, rigidLimit_ = 500;
-
+	double range_;
 
 	std::mt19937_64 rd;
 	GenerateRigidMode genMode_;
@@ -38,7 +38,7 @@ protected:
 
 	void generateRigid();
 public:
-	RigidSystem(PxPhysics* gPhysics, PxScene* gScene,Vector3 pos);
+	RigidSystem(PxPhysics* gPhysics, PxScene* gScene,Vector3 pos, double range);
 	virtual ~RigidSystem();
 
 	virtual void update(double t);
@@ -51,7 +51,7 @@ public:
 	void setMode(int i);
 	void resetScene();
 	void clearRigidBodies();
-	//void clearForces();
+	// void clearForces();
 
 	//Muelles
 	//void generateSpringAnchoredDemo();

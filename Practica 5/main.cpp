@@ -85,17 +85,18 @@ void initPhysics(bool interactive)
 	//particleSys_ = new ParticleGenerator(Vector3(0, 0, 0), 1000);
 	//particleSys_->setMode(5);
 
-	//rb_ = new RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(3,3,3)), Vector3(0, 30,0), 1.0, 1.0, Vector4(0, 0, 1, 1));
+	//rb_ = new RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(10, 5, 6)), Vector3(0, 30, 0), 5.0, 1.0, Vector4(0, 0, 1, 1));
+	//rb_->setAngularVelocity(Vector3(0, 5, 0));
 
 	//Suelo
-	/*PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,0,0}));
-	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
+	PxShape* shape = CreateShape(PxBoxGeometry(1000, 0.1, 1000));
 	suelo->attachShape(*shape);
 	gScene->addActor(*suelo);
 	RenderItem* item;
-	item = new RenderItem(shape, suelo, { 0,1,1,1 });*/
+	item = new RenderItem(shape, suelo, { 0,1,1,1 });
 
-	rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0));
+	rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
 }
 
 

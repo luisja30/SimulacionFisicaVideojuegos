@@ -1,7 +1,7 @@
 #include "RigidSystem.h"
 
-RigidSystem::RigidSystem(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos) :
-	gPhysics_(gPhysics), gScene_(gScene), pos_(pos) {
+RigidSystem::RigidSystem(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, double range) :
+	gPhysics_(gPhysics), gScene_(gScene), pos_(pos), range_(range){
 }
 
 RigidSystem::~RigidSystem() {
@@ -22,9 +22,9 @@ void RigidSystem::update(double t) {
 
 	for (auto it = rigidBodies_.begin(); it != rigidBodies_.end();) {
 		if (*it != nullptr) {
-			(*it)->update(t);
+			(*it)->integrate(t);
 			//Comprobar rango de recorrido o si la particula sigue viva
-			if (!(*it)->getAlive() /*|| ((*it)->getPosition() - pos_).magnitude() > range_ */ ) {
+			if (!(*it)->getAlive() || ((*it)->getPosition() - pos_).magnitude() > range_) {
 				//forceRegistry_->deleteParticleRegistry(*it);
 				delete* it;
 				it = rigidBodies_.erase(it);
@@ -50,7 +50,6 @@ void RigidSystem::generateRigid() {
 		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.y = pos_.y;
 		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
-		//Vector3 newPos = Vector3(posX, posY, posZ);
 
 		//Las particulas se mueven solo en el eje Y
 		newVel.y = -300;
@@ -58,6 +57,7 @@ void RigidSystem::generateRigid() {
 		//Añadimos particula
 		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 0, 1, 1));
 		newRigid->setVelocity(newVel);
+		newRigid->setAliveTime(3);
 		rigidBodies_.push_back(newRigid);
 
 		//Adherimos una fuerza a la particula
@@ -69,12 +69,10 @@ void RigidSystem::generateRigid() {
 		newPos.x = std::normal_distribution<double>(pos_.x - radius, pos_.x + radius)(rd);
 		newPos.y = std::normal_distribution<double>(pos_.y - radius, pos_.y + radius)(rd);
 		newPos.z = std::normal_distribution<double>(pos_.z - radius, pos_.z + radius)(rd);
-		//Vector3 newPos = Vector3(posX, posY, posZ);
 
 		newVel.x = std::uniform_real_distribution<double>(-1, 1)(rd);
 		newVel.y = std::uniform_real_distribution<double>(-1, 1)(rd);
 		newVel.z = std::uniform_real_distribution<double>(-1, 1)(rd);
-		//Vector3 newVel = Vector3(velX, velY, velZ);
 
 		//Damos un tiempo de vida aleatorio
 		newLifeTime = std::uniform_real_distribution<double>(9, 15)(rd);
@@ -91,16 +89,14 @@ void RigidSystem::generateRigid() {
 		newPos.x = pos_.x;
 		newPos.y = pos_.y;
 		newPos.z = pos_.z;
-		//Vector3 newPos = Vector3(posX, posY, posZ);
 
 		newVel.x = std::uniform_real_distribution<double>(-10, 10)(rd);
 		newVel.y = std::uniform_real_distribution<double>(-300, -200)(rd);
 		newVel.z = std::uniform_real_distribution<double>(-10, 10)(rd);
-		//Vector3 newVel = Vector3(velX, velY, velZ);
 
-		//float size = std::uniform_real_distribution<float>(1.0f, 6.0f)(rd);
+		float size = std::uniform_real_distribution<float>(1.0f, 6.0f)(rd);
 		//Añadimos particula
-		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(5)), newPos, 1, 1, Vector4(0, 0, 1, 1));
+		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(size)), newPos, 1, 1, Vector4(0, 0, 1, 1));
 		newRigid->setVelocity(newVel);
 		newRigid->setAliveTime(2);
 		rigidBodies_.push_back(newRigid);
