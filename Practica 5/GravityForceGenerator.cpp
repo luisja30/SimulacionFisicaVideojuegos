@@ -6,3 +6,7 @@ GravityForceGenerator::GravityForceGenerator(const Vector3& g, string name) : Fo
 void GravityForceGenerator::updateForce(Particle* p) {
 	p->addForce(gravity_ * p->getMass());
 }
+
+void GravityForceGenerator::updateForce(RigidBody* r) {
+	r->addForce(gravity_ * r->getMass());
+}

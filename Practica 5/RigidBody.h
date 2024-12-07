@@ -35,6 +35,8 @@ public:
 	bool integrate(double t);
 	
 	Vector3 getPosition();
+	Vector3 getVel();
+	double getMass();
 	inline bool getAlive() const { return isAlive_; };
 	bool insideLimits();
 
@@ -42,5 +44,8 @@ public:
 	void setVelocity(Vector3 vel);
 	void setAngularVelocity(Vector3 aVel);
 	void setAliveTime(double aliveTime);
+	void setMass(double m);
+
+	void addForce(Vector3 force);
 };
 

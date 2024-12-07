@@ -13,6 +13,15 @@ void WhirlwindForceGenerator::updateForce(Particle* p) {
 	}
 }
 
+void WhirlwindForceGenerator::updateForce(RigidBody* r) {
+	if (insideLimits(r->getPosition())) {
+		Vector3 pPos = r->getPosition();
+		Vector3 distanceDiff = Vector3(-(pPos.z - pos_.z), 50 - (pPos.y - pos_.y), pPos.x - pos_.x);
+		Vector3 force = k_ * distanceDiff;
+		r->addForce(force);
+	}
+}
+
 bool WhirlwindForceGenerator::insideLimits(Vector3 pos) {
 	return pos.x < pos_.x + size_
 		&& pos.x > pos_.x - size_

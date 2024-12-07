@@ -33,3 +33,23 @@ void BuoyancyForceGenerator::updateForce(Particle* particle) {
 	particle->addForce(f);
 }
 
+void BuoyancyForceGenerator::updateForce(RigidBody* rigidBody) {
+	float h = rigidBody->getPosition().y;
+	float h0 = liquid_particle->getPosition().y;
+
+	Vector3 f(0, 0, 0);
+	float immersed = 0.0;
+
+	if (h - h0 > height_ * 0.5)
+		immersed = 0.0;
+
+	else if (h0 - h > height_ * 0.5)
+		//Totalmente inmerso
+		immersed = 1.0;
+	else
+		immersed = (h0 - h) / height_ + 0.5;
+
+	f.y = liquid_density_ * volume_ * immersed * gravity_;
+	rigidBody->addForce(f);
+}
+

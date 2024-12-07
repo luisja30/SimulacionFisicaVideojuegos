@@ -15,6 +15,7 @@ public:
 	inline float getVolume() { return volume_; };
 	inline void setVolume(float v) { volume_ = v; };
 	virtual void updateForce(Particle* particle);
+	virtual void updateForce(RigidBody* rigidBody);
 	virtual ~BuoyancyForceGenerator();
 
 };

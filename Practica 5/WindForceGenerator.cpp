@@ -17,6 +17,14 @@ void WindForceGenerator::updateForce(Particle* p) {
 	}
 }
 
+void WindForceGenerator::updateForce(RigidBody* r) {
+	if (insideLimits(r->getPosition())) {
+		Vector3 diffVel = vel_ - r->getVel();
+		Vector3 windForce = k1_ * diffVel + (k2_ * diffVel.magnitude()) * diffVel;
+		r->addForce(windForce);
+	}
+}
+
 bool WindForceGenerator::insideLimits(Vector3 pos) {
 	return pos.x < pos_.x + size_ 
 		&& pos.x > pos_.x - size_ 

@@ -54,6 +54,14 @@ Vector3 RigidBody::getPosition() {
 	return rigidDynamic_->getGlobalPose().p;
 }
 
+Vector3 RigidBody::getVel() {
+	return rigidDynamic_->getLinearVelocity();
+}
+
+double RigidBody::getMass() {
+	return rigidDynamic_->getMass();
+}
+
 bool RigidBody::insideLimits() {
 	//return getPosition();
 	return false;
@@ -69,4 +77,12 @@ void RigidBody::setAngularVelocity(Vector3 aVel) {
 
 void RigidBody::setAliveTime(double aliveTime) {
 	aliveTime_ = aliveTime;
+}
+
+void RigidBody::setMass(double m) {
+	rigidDynamic_->setMass(m);
+}
+
+void RigidBody::addForce(Vector3 force) {
+	rigidDynamic_->addForce(force);
 }

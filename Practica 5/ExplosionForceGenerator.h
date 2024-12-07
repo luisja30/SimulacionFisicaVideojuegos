@@ -13,6 +13,7 @@ protected:
 public:
 	ExplosionForceGenerator(Vector3 pos, float radius, float k, float tau, string name);
 	virtual void updateForce(Particle* p) override;
+	virtual void updateForce(RigidBody* r) override;
 	bool insideLimits(float r);
 
 };
