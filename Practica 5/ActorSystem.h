@@ -61,7 +61,7 @@ class ActorSystem {
 	//Muelles
 	AnchoredSpringFG* anchoredfg_;
 	SpringForceGenerator* springfg_;
-	BuoyancyForceGenerator* bfg_;
+	BuoyancyForceGenerator* bfg;
 public:
 	ActorSystem(PxPhysics* gPhysics, PxScene* gScene,Vector3 pos, double range);
 	virtual ~ActorSystem();
@@ -73,6 +73,7 @@ public:
 	void createExplosion(int n);
 
 	void keyPressed(char k);
+	void changeActorMode(char k);
 	void resetScene();
 	void clearActors();
     void clearForces();

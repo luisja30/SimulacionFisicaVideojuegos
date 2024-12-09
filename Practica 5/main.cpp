@@ -91,12 +91,12 @@ void initPhysics(bool interactive)
 	//rb_->setAngularVelocity(Vector3(0, 5, 0));
 
 	//Suelo
-	/*PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
+	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
 	PxShape* shape = CreateShape(PxBoxGeometry(1000, 0.1, 1000));
 	suelo->attachShape(*shape);
 	gScene->addActor(*suelo);
 	RenderItem* item;
-	item = new RenderItem(shape, suelo, { 0,1,1,1 });*/
+	item = new RenderItem(shape, suelo, { 0,1,1,1 });
 
 	//rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
 	actorSys_ = new ActorSystem(gPhysics, gScene, Vector3(0), 1000);

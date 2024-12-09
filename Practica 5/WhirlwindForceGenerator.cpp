@@ -5,7 +5,7 @@ WhirlwindForceGenerator::WhirlwindForceGenerator(Vector3 pos, float size, float 
 }
 
 void WhirlwindForceGenerator::updateForce(Actor* a) {
-	if (insideLimits(a->getPosition())) {
+	if (insideLimits(a->getPosition()) && isActive_) {
 		Vector3 pPos = a->getPosition();
 		Vector3 distanceDiff = Vector3(-(pPos.z - pos_.z), 50 - (pPos.y - pos_.y), pPos.x - pos_.x);
 		Vector3 force = k_ * distanceDiff;

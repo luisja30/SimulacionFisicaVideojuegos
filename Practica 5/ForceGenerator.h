@@ -9,8 +9,9 @@ protected:
 	Vector3 pos_;
 	//double t_;
 	string name_;
+	bool isActive_;
 public:
-	ForceGenerator(Vector3 p, string name) : pos_(p), name_(name) {};
+	ForceGenerator(Vector3 p, string name) : pos_(p), name_(name), isActive_(true) {};
 	virtual ~ForceGenerator() {};
 
 	virtual void updateForce(Actor* a) = 0;
@@ -21,4 +22,10 @@ public:
 	string getName() const {
 		return name_;
 	}
+
+	void setActive(bool active) {
+		isActive_ = active;
+	}
+
+	inline bool getActive() { return isActive_; }
 };

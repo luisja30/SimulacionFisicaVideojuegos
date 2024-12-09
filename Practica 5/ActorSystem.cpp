@@ -33,14 +33,6 @@ void ActorSystem::createForceGenerators() {
 
 	//Explosion
 	explosionF_ = new ExplosionForceGenerator(pos_, 10000000, 1000, 900000, "EXPLOSION");
-
-
-	bfg_ = nullptr;
-	/*forceGen_.push_back(gF_);
-	forceGen_.push_back(invGF_);
-	forceGen_.push_back(windF_);
-	forceGen_.push_back(tornadoF_);
-	forceGen_.push_back(explosionF_);*/
 }
 
 void ActorSystem::update(double t) {
@@ -161,7 +153,7 @@ void ActorSystem::generateActor() {
 		newVel.z = std::uniform_real_distribution<double>(-1, 1)(rd);
 
 		//Damos un tiempo de vida aleatorio
-		newLifeTime = std::uniform_real_distribution<double>(9, 15)(rd);
+		newLifeTime = std::uniform_real_distribution<double>(5, 10)(rd);
 
 		if (actorMode_ == PARTICLES) {
 			//Añadimos particula
@@ -174,6 +166,7 @@ void ActorSystem::generateActor() {
 			newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(1, 1, 1, 1));
 			newRigid->setVelocity(newVel);
 			newRigid->setAliveTime(newLifeTime);
+			newRigid->disableGravity();
 
 			actors_.push_back(newRigid);
 		}
@@ -211,27 +204,22 @@ void ActorSystem::generateActor() {
 		newPos.y = pos_.y;
 		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
 
+		newMass = std::uniform_real_distribution<double>(2.0, 10.0)(rd);
 
-		if (genMode_ == PARTICLES) {
+		if (actorMode_ == PARTICLES) {
 			//Añadimos particula
 			newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
 			newParticle->setColor({ 0,0,1,1 });
-
-			/*newMass = std::normal_distribution<double>(1.0, 20.0)(rd);
-			newParticle->setMass(newMass);*/
-
+			newParticle->setMass(newMass);
 			actors_.push_back(newParticle);
 
 			forceRegistry_->addRegistry(windF_, newParticle);
 		}
 		else {
 			newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 0, 1, 1));
-			//newRigid->setVelocity(newVel);
 			newRigid->setAliveTime(100);
+			newRigid->setMass(newMass);
 			actors_.push_back(newRigid);
-
-			/*newMass = std::normal_distribution<double>(1.0, 20.0)(rd);
-			newParticle->setMass(newMass);*/
 
 			forceRegistry_->addRegistry(windF_, newRigid);
 		}
@@ -270,47 +258,84 @@ void ActorSystem::generateActor() {
 	actorCount_++;
 }
 void ActorSystem::keyPressed(char k) {
-	resetScene();
-	switch (k) {
+	switch (toupper(k)) {
 	case '1': {
+		resetScene();
 		genMode_ = RAIN_A;
 		break;
 	}
 	case '2': {   
+		resetScene();
 		genMode_ = MIST_A;
 		break;
 	}
 	case '3': {
+		resetScene();
 		genMode_ = HOSE_A;
 		break;
 	}
 	//Fuerzas
 	case '4': {
-		genMode_ = WIND_A;
+		resetScene();
+		genMode_ = TORNADO_A;
 		break;
 	}
 	case '5': {
+		resetScene();
 		genMode_ = EXPLOSION_A;
 		createExplosion(500);
 		break;
 	}
 	//Muelles
 	case '6': {
+		resetScene();
 		genMode_ = SPRING_MODE_A;
 		generateSpringAnchoredDemo();
 		break;
 	}
 	case '7': {
+		resetScene();
 		genMode_ = SPRING_MODE_A;
 		generateSpringDemo(false);
 		break;
 	}
 	case '8': {
+		resetScene();
 		genMode_ = SPRING_MODE_A;
 		generateBuoyancyDemo();
 		break;
 	}
+
+	//Cambiar actores
+	case 'R':
+		resetScene();
+		actorMode_ = RIGIDBODY;
+		break;
+	case 'P':
+		resetScene();
+		actorMode_ = PARTICLES;
+		break;
+	//Desactivar fuerzas
+	case 'T':
+		//resetScene();
+		tornadoF_->setActive(!tornadoF_->getActive());
+		break;
 	}
+}
+
+void ActorSystem::changeActorMode(char k) {
+	switch (k)
+	{
+	case 'R':
+		actorMode_ = RIGIDBODY;
+		break;
+	case 'P':
+		actorMode_ = PARTICLES;
+		break;
+	default:
+		break;
+	}
+	resetScene();
 }
 
 void ActorSystem::resetScene() {
@@ -489,20 +514,20 @@ void ActorSystem::generateBuoyancyDemo() {
 		p3->setSemiEuler();
 		p3->setColor({ 1.0,0.0,1.0,1.0 }); //Morada
 
-		bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
+		BuoyancyForceGenerator* bfg = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
 
-		forceGen_.push_back(bfg_);
+		forceGen_.push_back(bfg);
 		actors_.push_back(p1);
 		actors_.push_back(p2);
 		actors_.push_back(p3);
 
-		forceRegistry_->addRegistry(bfg_, p1);
+		forceRegistry_->addRegistry(bfg, p1);
 		forceRegistry_->addRegistry(gF_, p1);
 
-		forceRegistry_->addRegistry(bfg_, p2);
+		forceRegistry_->addRegistry(bfg, p2);
 		forceRegistry_->addRegistry(gF_, p2);
 
-		forceRegistry_->addRegistry(bfg_, p3);
+		forceRegistry_->addRegistry(bfg, p3);
 		forceRegistry_->addRegistry(gF_, p3);
 	}
 	else {
@@ -516,20 +541,20 @@ void ActorSystem::generateBuoyancyDemo() {
 			CreateShape(PxBoxGeometry(3, 3, 3)), Vector3(0, 20, 10), 1, 1, Vector4(1, 0, 1, 1));
 		rb3->setMass(1000);
 
-		bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
+		BuoyancyForceGenerator* bfg = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
 
-		forceGen_.push_back(bfg_);
+		forceGen_.push_back(bfg);
 		actors_.push_back(rb1);
 		actors_.push_back(rb2);
 		actors_.push_back(rb3);
 
-		forceRegistry_->addRegistry(bfg_, rb1);
+		forceRegistry_->addRegistry(bfg, rb1);
 		//forceRegistry_->addRegistry(gF_, p1);
 
-		forceRegistry_->addRegistry(bfg_, rb2);
+		forceRegistry_->addRegistry(bfg, rb2);
 		//forceRegistry_->addRegistry(gF_, p2);
 
-		forceRegistry_->addRegistry(bfg_, rb3);
+		forceRegistry_->addRegistry(bfg, rb3);
 		//forceRegistry_->addRegistry(gF_, p3);
 	}
 }
@@ -563,14 +588,14 @@ void ActorSystem::changeK(char k){
 }
 
 void ActorSystem::changeVolume(char v){
-	if (bfg_ != nullptr) {
-		float currVolumen = bfg_->getVolume();
+	if (bfg != nullptr) {
+		float currVolumen = bfg->getVolume();
 		int sign = v == '.' ? 1 : -1;
 
-		if (bfg_->getVolume() + sign > 0) {
+		if (bfg->getVolume() + sign > 0) {
 			currVolumen += sign;
-			bfg_->setVolume(currVolumen);
-			cout << "v: " << bfg_->getVolume();
+			bfg->setVolume(currVolumen);
+			cout << "v: " << bfg->getVolume();
 			v == '.' ? cout << " (+)\n" : cout << " (-)\n";
 		}
 	}

@@ -4,5 +4,6 @@ GravityForceGenerator::GravityForceGenerator(const Vector3& g, string name) : Fo
 }
 
 void GravityForceGenerator::updateForce(Actor* a) {
-	a->addForce(gravity_ * a->getMass());
+	if (isActive_)
+		a->addForce(gravity_ * a->getMass());
 }

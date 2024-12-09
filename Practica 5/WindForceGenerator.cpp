@@ -10,7 +10,7 @@ WindForceGenerator::WindForceGenerator(Vector3 pos, Vector3 vel, float size, flo
 }
 
 void WindForceGenerator::updateForce(Actor* a) {
-	if (insideLimits(a->getPosition())) {
+	if (insideLimits(a->getPosition()) && isActive_) {
 		Vector3 diffVel = vel_ - a->getVel();
 		Vector3 windForce = k1_ * diffVel + (k2_ * diffVel.magnitude()) * diffVel;
 		a->addForce(windForce);

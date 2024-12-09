@@ -15,14 +15,10 @@ protected:
 	PxScene* gScene_;
 	PxShape* shape_;
 	PxRigidDynamic* rigidDynamic_;
+	PxMaterial* material_;
 
-	//Vector3 vel_, acel_;
 	Vector4 color_;
-
-	//physx::PxTransform pose_;
-	//RenderItem* renderItem_;
 	double dumping_; // 0 < d < 1
-	//double aliveTime_;
 	double density_;
 	bool isAlive_;
 	bool semi_;
@@ -41,7 +37,6 @@ public:
 	virtual Vector3 getVel() override;
 	virtual double getMass() override;
 	inline bool getAlive() const { return isAlive_; };
-	//bool insideLimits();
 
 
 	void setVelocity(Vector3 vel);

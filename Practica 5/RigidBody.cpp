@@ -69,11 +69,6 @@ double RigidBody::getMass() {
 	return rigidDynamic_->getMass();
 }
 
-//bool RigidBody::insideLimits() {
-//	//return getPosition();
-//	return false;
-//}
-
 void RigidBody::setVelocity(Vector3 vel) {
 	rigidDynamic_->setLinearVelocity(vel);
 }
