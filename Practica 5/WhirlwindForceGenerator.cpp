@@ -4,21 +4,12 @@ WhirlwindForceGenerator::WhirlwindForceGenerator(Vector3 pos, float size, float 
 	: WindForceGenerator(pos, Vector3(0), size, 0, 0, name), k_(k) {
 }
 
-void WhirlwindForceGenerator::updateForce(Particle* p) {
-	if (insideLimits(p->getPosition())) {
-		Vector3 pPos = p->getPosition();
+void WhirlwindForceGenerator::updateForce(Actor* a) {
+	if (insideLimits(a->getPosition())) {
+		Vector3 pPos = a->getPosition();
 		Vector3 distanceDiff = Vector3(-(pPos.z - pos_.z), 50 - (pPos.y - pos_.y), pPos.x - pos_.x);
 		Vector3 force = k_ * distanceDiff;
-		p->addForce(force);
-	}
-}
-
-void WhirlwindForceGenerator::updateForce(RigidBody* r) {
-	if (insideLimits(r->getPosition())) {
-		Vector3 pPos = r->getPosition();
-		Vector3 distanceDiff = Vector3(-(pPos.z - pos_.z), 50 - (pPos.y - pos_.y), pPos.x - pos_.x);
-		Vector3 force = k_ * distanceDiff;
-		r->addForce(force);
+		a->addForce(force);
 	}
 }
 

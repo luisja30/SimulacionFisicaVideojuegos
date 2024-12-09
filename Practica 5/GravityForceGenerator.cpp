@@ -3,10 +3,6 @@
 GravityForceGenerator::GravityForceGenerator(const Vector3& g, string name) : ForceGenerator(Vector3(0), name), gravity_(g) {
 }
 
-void GravityForceGenerator::updateForce(Particle* p) {
-	p->addForce(gravity_ * p->getMass());
-}
-
-void GravityForceGenerator::updateForce(RigidBody* r) {
-	r->addForce(gravity_ * r->getMass());
+void GravityForceGenerator::updateForce(Actor* a) {
+	a->addForce(gravity_ * a->getMass());
 }

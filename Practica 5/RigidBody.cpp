@@ -1,12 +1,12 @@
 #include "RigidBody.h"
 
 RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 pos, double m, double v, Vector4 c) :
-	gPhysics_(gPhysics), gScene_(gScene), shape_(sp), mass_(m), volume_(v), color_(c), aliveTime_(1000) {
+	Actor(pos, Vector3(0), Vector3(0)), gPhysics_(gPhysics), gScene_(gScene), shape_(sp), mass_(m), volume_(v), color_(c) {
 
 	//double r = 3; // Radio de la esfera
 	//double inertia = (2.0 / 3.0) * mass_ * r * r;
 	//double inertia = (2.0 / 5.0) * mass_ * r * r;
-	
+
 	/*double w = 5;
 	double h = 10;
 	double d = 6;
@@ -18,9 +18,9 @@ RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 
 
 	//radius_ = 3;
 	//PxRigidDynamic* new_solid;
-	rigidDynamic_ = gPhysics_->createRigidDynamic(PxTransform(pos));
-	rigidDynamic_->setLinearVelocity(Vector3(0,0,0));
-	rigidDynamic_->setAngularVelocity(Vector3(0,0,0));
+	rigidDynamic_ = gPhysics_->createRigidDynamic(tr_);
+	rigidDynamic_->setLinearVelocity(Vector3(0, 0, 0));
+	rigidDynamic_->setAngularVelocity(Vector3(0, 0, 0));
 	//PxShape* shape_ad = CreateShape();
 	rigidDynamic_->attachShape(*shape_);
 	rigidDynamic_->setMass(mass_);
@@ -33,6 +33,8 @@ RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 
 	gScene_->addActor(*rigidDynamic_);
 
 	renderItem_ = new RenderItem(shape_, rigidDynamic_, color_);
+	setAliveTime(1000);
+	dumping_ = (0.998);
 }
 
 RigidBody::~RigidBody() {
@@ -42,16 +44,21 @@ RigidBody::~RigidBody() {
 }
 
 bool RigidBody::integrate(double t) {
+	//Actualizo posicion
+	Vector3 vel = getVel();
+	vel = vel*  pow(dumping_, t);
+	tr_.p += vel * t;
+
 	aliveTime_ -= t;
 
 	if (aliveTime_ <= 0)
-		isAlive_ = false;
+		return false;
 
 	return true;
 }
 
 Vector3 RigidBody::getPosition() {
-	return rigidDynamic_->getGlobalPose().p;
+	return tr_.p;
 }
 
 Vector3 RigidBody::getVel() {
@@ -62,10 +69,10 @@ double RigidBody::getMass() {
 	return rigidDynamic_->getMass();
 }
 
-bool RigidBody::insideLimits() {
-	//return getPosition();
-	return false;
-}
+//bool RigidBody::insideLimits() {
+//	//return getPosition();
+//	return false;
+//}
 
 void RigidBody::setVelocity(Vector3 vel) {
 	rigidDynamic_->setLinearVelocity(vel);
@@ -83,6 +90,10 @@ void RigidBody::setMass(double m) {
 	rigidDynamic_->setMass(m);
 }
 
-void RigidBody::addForce(Vector3 force) {
-	rigidDynamic_->addForce(force);
+void RigidBody::addForce(const Vector3& f) {
+	rigidDynamic_->addForce(f);
+}
+
+void RigidBody::disableGravity() {
+	rigidDynamic_->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }

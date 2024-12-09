@@ -1,39 +1,45 @@
 #include "Particle.h"
 
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel)
-	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(100), isAlive_(true), semi_(false){
+	: Actor(pos, vel, acel), dumping_(0.998), isAlive_(true), semi_(false) {
 	//isAlive_ = true;
 	//pose_ = PxTransform(pos.x, pos.y, pos.z);
-	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(5.0f)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(5.0f)), &tr_, { 0.0, 0.0, 1.0, 1.0 });
+	setAliveTime(100);
 }
 
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r)
-	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(100), isAlive_(true), semi_(false) {
-	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+	: Actor(pos, vel, acel), dumping_(0.998), isAlive_(true), semi_(false) {
+	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &tr_, { 0.0, 0.0, 1.0, 1.0 });
+	setAliveTime(100);
 }
 
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime) 
-	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(aliveTime), isAlive_(true), semi_(false) {
-	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+	: Actor(pos, vel, acel), dumping_(0.998), isAlive_(true), semi_(false) {
+	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &tr_, { 0.0, 0.0, 1.0, 1.0 });
+	setAliveTime(aliveTime);
 }
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass) 
-	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(aliveTime), isAlive_(true), semi_(false) {
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass)
+	: Actor(pos, vel, acel), dumping_(0.998), isAlive_(true), semi_(false) {
 	setMass(mass);
 	force_ = { 0,0,0 };
-	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+	renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &tr_, { 0.0, 0.0, 1.0, 1.0 });
+	setAliveTime(aliveTime);
 }
 
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass, particleForm form)
-	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(aliveTime), isAlive_(true), semi_(false) {
+	: Actor(pos, vel, acel), dumping_(0.998), isAlive_(true), semi_(false) {
 	setMass(mass);
 	force_ = { 0,0,0 };
 	if (form == BOX)
-		renderItem_ = new RenderItem(CreateShape(PxBoxGeometry(r, r, r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+		renderItem_ = new RenderItem(CreateShape(PxBoxGeometry(r, r, r)), &tr_, { 0.0, 0.0, 1.0, 1.0 });
 	else if (form == PLANE)
-		renderItem_ = new RenderItem(CreateShape(PxBoxGeometry(r * 10, r / 10, r * 10)), &pose_, { 0.0,0.0,1.0,1.0 });
+		renderItem_ = new RenderItem(CreateShape(PxBoxGeometry(r * 10, r / 10, r * 10)), &tr_, { 0.0,0.0,1.0,1.0 });
 	else
-		renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &pose_, { 0.0, 0.0, 1.0, 1.0 });
+		renderItem_ = new RenderItem(CreateShape(PxSphereGeometry(r)), &tr_, { 0.0, 0.0, 1.0, 1.0 });
+
+	setAliveTime(aliveTime);
 }
 
 Particle::~Particle() {
@@ -41,10 +47,10 @@ Particle::~Particle() {
 	renderItem_ = nullptr;
 }
 
-void Particle::integrate(double t) {
+bool Particle::integrate(double t) {
 	//Si no esta viva la particula, no devolvemos nada
-	if (!isAlive_)
-		return;
+	//if (!isAlive_)
+		//return false;
 
 	//Calcular aceleracion a partir de la fuerza y masa
 	acel_ = force_ / getMass();
@@ -52,14 +58,14 @@ void Particle::integrate(double t) {
 
 	if (!semi_) {
 		//euler
-		pose_.p += vel_ * t;
+		tr_.p += vel_ * t;
 		vel_ += acel_ * t;
 		vel_ *= pow(dumping_, t);
 	}
 	else {
 		//euler semi-implicito
 		vel_ += acel_ * t;
-		pose_.p += vel_ * t;
+		tr_.p += vel_ * t;
 		vel_ *= pow(dumping_, t);
 	}
 
@@ -73,10 +79,13 @@ void Particle::integrate(double t) {
 	aliveTime_ -= t;
 
 	if (aliveTime_ <= 0)
-		isAlive_ = false;
+		return false;
+		//isAlive_ = false;
 
 	//Borrar fuerza
 	clearForce();
+
+	return true;
 }
 
 void Particle::setColor(Vector4 color) {
@@ -101,18 +110,18 @@ void Particle::clearForce() {
 }
 
 bool Particle::isGrounded() {
-	return pose_.p.y <= 0;
+	return tr_.p.y <= 0;
 }
 
 Vector3 Particle::getPosition() const {
-	return pose_.p;
+	return tr_.p;
 }
 
-Vector3 Particle::getVel() const {
+Vector3 Particle::getVel() {
 	return vel_;
 }
 
-double Particle::getMass() const {
+double Particle::getMass() {
 	return mass_;
 }
 

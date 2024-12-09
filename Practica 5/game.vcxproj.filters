@@ -13,10 +13,6 @@
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
-    <ClCompile Include="RainGenerator.cpp" />
-    <ClCompile Include="HoseGenerator.cpp" />
-    <ClCompile Include="MistGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="WindForceGenerator.cpp" />
@@ -28,6 +24,9 @@
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="RigidSystem.cpp" />
     <ClCompile Include="RigidForceRegistry.cpp" />
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ActorSystem.cpp" />
+    <ClCompile Include="ActorForceRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -42,10 +41,6 @@
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Projectile.h" />
-    <ClInclude Include="ParticleGenerator.h" />
-    <ClInclude Include="RainGenerator.h" />
-    <ClInclude Include="HoseGenerator.h" />
-    <ClInclude Include="MistGenerator.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="GravityForceGenerator.h" />
@@ -58,6 +53,9 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="RigidSystem.h" />
     <ClInclude Include="RigidForceRegistry.h" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="ActorSystem.h" />
+    <ClInclude Include="ActorForceRegistry.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

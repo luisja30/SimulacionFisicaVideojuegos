@@ -13,8 +13,7 @@ public:
 	ForceGenerator(Vector3 p, string name) : pos_(p), name_(name) {};
 	virtual ~ForceGenerator() {};
 
-	virtual void updateForce(Particle* p) = 0;
-	virtual void updateForce(RigidBody* r) = 0;
+	virtual void updateForce(Actor* a) = 0;
 
 	/*void updateTime(double t) {
 		t_ += t;

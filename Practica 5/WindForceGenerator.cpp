@@ -9,19 +9,11 @@ WindForceGenerator::WindForceGenerator(Vector3 pos, Vector3 vel, float size, flo
 	}
 }
 
-void WindForceGenerator::updateForce(Particle* p) {
-	if (insideLimits(p->getPosition())) {
-		Vector3 diffVel = vel_ - p->getVel();
+void WindForceGenerator::updateForce(Actor* a) {
+	if (insideLimits(a->getPosition())) {
+		Vector3 diffVel = vel_ - a->getVel();
 		Vector3 windForce = k1_ * diffVel + (k2_ * diffVel.magnitude()) * diffVel;
-		p->addForce(windForce);
-	}
-}
-
-void WindForceGenerator::updateForce(RigidBody* r) {
-	if (insideLimits(r->getPosition())) {
-		Vector3 diffVel = vel_ - r->getVel();
-		Vector3 windForce = k1_ * diffVel + (k2_ * diffVel.magnitude()) * diffVel;
-		r->addForce(windForce);
+		a->addForce(windForce);
 	}
 }
 

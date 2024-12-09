@@ -15,6 +15,7 @@
 #include "MistGenerator.h"
 #include "RigidBody.h"
 #include "RigidSystem.h"
+#include "ActorSystem.h"
 
 #include <iostream>
 
@@ -57,6 +58,7 @@ std::vector<Particle*> particles_;
 ParticleGenerator* particleSys_ = NULL;
 RigidBody* rb_ = NULL;
 RigidSystem* rigidSys_ = NULL;
+ActorSystem* actorSys_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -89,14 +91,15 @@ void initPhysics(bool interactive)
 	//rb_->setAngularVelocity(Vector3(0, 5, 0));
 
 	//Suelo
-	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
+	/*PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
 	PxShape* shape = CreateShape(PxBoxGeometry(1000, 0.1, 1000));
 	suelo->attachShape(*shape);
 	gScene->addActor(*suelo);
 	RenderItem* item;
-	item = new RenderItem(shape, suelo, { 0,1,1,1 });
+	item = new RenderItem(shape, suelo, { 0,1,1,1 });*/
 
-	rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
+	//rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
+	actorSys_ = new ActorSystem(gPhysics, gScene, Vector3(0), 1000);
 }
 
 
@@ -124,7 +127,8 @@ void stepPhysics(bool interactive, double t)
 	}
 
 	//particleSys_->update(t);
-	rigidSys_->update(t);
+	//rigidSys_->update(t);
+	actorSys_->update(t);
 }
 
 // Function to clean data
@@ -223,7 +227,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 
-	rigidSys_->keyPressed(key);
+	actorSys_->keyPressed(key);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

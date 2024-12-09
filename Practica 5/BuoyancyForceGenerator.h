@@ -2,6 +2,7 @@
 
 #include "ForceGenerator.h"
 #include "core.hpp"
+using namespace physx;
 
 class BuoyancyForceGenerator :public ForceGenerator {
 protected:
@@ -14,8 +15,7 @@ public:
 
 	inline float getVolume() { return volume_; };
 	inline void setVolume(float v) { volume_ = v; };
-	virtual void updateForce(Particle* particle);
-	virtual void updateForce(RigidBody* rigidBody);
+	virtual void updateForce(Actor* a) override;
 	virtual ~BuoyancyForceGenerator();
 
 };

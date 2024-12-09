@@ -4,28 +4,15 @@ ExplosionForceGenerator::ExplosionForceGenerator(Vector3 pos, float radius, floa
 	: ForceGenerator(pos, name), radius_(radius), k_(k), tau_(tau), timePassed_(0) {
 }
 
-void ExplosionForceGenerator::updateForce(Particle* p) {
-	Vector3 pPos = p->getPosition();
-	// r = distancia de la explosion
-	float r = (pPos - pos_).magnitude();
-	//verificar si la particula esta en el radio de explosion
-	if (insideLimits(r)) {
-		Vector3 diffDistance = Vector3(pPos.x - pos_.x, pPos.y - pos_.y, pPos.z - pos_.z);
-		Vector3 force = k_ / pow(r, 2) * diffDistance * exp(-timePassed_ / tau_);
-		p->addForce(force);
-	}
-	timePassed_++;
-}
-
-void ExplosionForceGenerator::updateForce(RigidBody* r) {
-	Vector3 pPos = r->getPosition();
+void ExplosionForceGenerator::updateForce(Actor* a) {
+	Vector3 pPos = a->getPosition();
 	// r = distancia de la explosion
 	float rad = (pPos - pos_).magnitude();
 	//verificar si la particula esta en el radio de explosion
 	if (insideLimits(rad)) {
 		Vector3 diffDistance = Vector3(pPos.x - pos_.x, pPos.y - pos_.y, pPos.z - pos_.z);
 		Vector3 force = k_ / pow(rad, 2) * diffDistance * exp(-timePassed_ / tau_);
-		r->addForce(force);
+		a->addForce(force);
 	}
 	timePassed_++;
 }

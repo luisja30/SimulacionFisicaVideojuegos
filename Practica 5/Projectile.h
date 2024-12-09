@@ -7,6 +7,6 @@ protected:
 	Vector3 g_ = { 0, 9.8, 0 };
 public:
 	Projectile(Vector3 pos, Vector3 vel, Vector3 acel);
-	void integrate(double t) override;
+	bool integrate(double t) override;
 };
 

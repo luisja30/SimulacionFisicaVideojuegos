@@ -239,19 +239,23 @@ void RigidSystem::keyPressed(char k) {
 		}
 		case '5': {
 			genMode_ = EXPLOSION_R;
+			createExplosion(500);
 			break;
 		}
 		//Muelles
 		case '6': {
 			genMode_ = SPRING_MODE_R;
+			generateSpringAnchoredDemo();
 			break;
 		}
 		case '7': {
 			genMode_ = SPRING_MODE_R;
+			generateSpringDemo(false);
 			break;
 		}
 		case '8': {
 			genMode_ = SPRING_MODE_R;
+			generateBuoyancyDemo();
 			break;
 		}
 
@@ -321,9 +325,7 @@ void RigidSystem::generateSpringAnchoredDemo() {
 	RigidBody* rb3 = new RigidBody(gPhysics_, gScene_,
 		CreateShape(PxSphereGeometry(2)), Vector3(-5, 45, 0), 1, 1, Vector4(0, 1, 1, 1));
 
-	
-
-	AnchoredSpringFG* fAnchor = new AnchoredSpringFG(1, 20, Vector3(0, 50, 0));
+	AnchoredSpringFG* fAnchor = new AnchoredSpringFG(1, 5, Vector3(0, 50, 0));
 
 	forceRegistry_->addRegistry(fAnchor, rb1);
 	forceRegistry_->addRegistry(fAnchor, rb2);
@@ -389,23 +391,24 @@ void RigidSystem::generateSpringDemo(bool elastic) {
 }
 
 void RigidSystem::generateBuoyancyDemo() {
-	Particle* p1 = new Particle({ 0.0, 20, 0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p1->setMass(500);
-	p1->setSemiEuler();
-	p1->setColor({ 1.0,1.0,0.0,1.0 }); //Amarilla
+	//Particle* p1 = new Particle({ 0.0, 20, 0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
+	//p1->setMass(500);
+	//p1->setSemiEuler();
+	//p1->setColor({ 1.0,1.0,0.0,1.0 }); //Amarilla
 
-	Particle* p2 = new Particle({ 0.0, 20, -10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p2->setMass(100);
-	p2->setSemiEuler();
-	p2->setColor({ 1.0,0.0,0.0,1.0 }); //Roja
+	//Particle* p2 = new Particle({ 0.0, 20, -10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
+	//p2->setMass(100);
+	//p2->setSemiEuler();
+	//p2->setColor({ 1.0,0.0,0.0,1.0 }); //Roja
 
-	Particle* p3 = new Particle({ 0.0, 20, 10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p3->setMass(1000);
-	p3->setSemiEuler();
-	p3->setColor({ 1.0,0.0,1.0,1.0 }); //Morada
+	//Particle* p3 = new Particle({ 0.0, 20, 10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
+	//p3->setMass(1000);
+	//p3->setSemiEuler();
+	//p3->setColor({ 1.0,0.0,1.0,1.0 }); //Morada
 
 	RigidBody* rb1 = new RigidBody(gPhysics_, gScene_,
 		CreateShape(PxBoxGeometry(3, 3, 3)), Vector3(0, 20, 0), 1, 1, Vector4(1, 1, 0, 1));
+	rb1->setMass(5);
 	RigidBody* rb2 = new RigidBody(gPhysics_, gScene_,
 		CreateShape(PxBoxGeometry(3, 3, 3)), Vector3(0, 20, -10), 1, 1, Vector4(1, 0, 0, 1));
 	RigidBody* rb3 = new RigidBody(gPhysics_, gScene_,
