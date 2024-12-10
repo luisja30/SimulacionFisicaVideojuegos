@@ -305,7 +305,30 @@ void ActorSystem::keyPressed(char k) {
 		generateBuoyancyDemo();
 		break;
 	}
-
+	case '0': {
+		changeMass('0');
+		break;
+	}
+	case '9': {
+		changeMass('9');
+		break;
+	}
+	case '-': {
+		changeK('-');
+		break;
+	}
+	case '+': {
+		changeK('+');
+		break;
+	}
+	case '.': {
+		changeVolume('.');
+		break;
+	}
+	case ',': {
+		changeVolume(',');
+		break;
+	}
 	//Cambiar actores
 	case 'R':
 		resetScene();
@@ -514,20 +537,20 @@ void ActorSystem::generateBuoyancyDemo() {
 		p3->setSemiEuler();
 		p3->setColor({ 1.0,0.0,1.0,1.0 }); //Morada
 
-		BuoyancyForceGenerator* bfg = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
+		bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
 
-		forceGen_.push_back(bfg);
+		forceGen_.push_back(bfg_);
 		actors_.push_back(p1);
 		actors_.push_back(p2);
 		actors_.push_back(p3);
 
-		forceRegistry_->addRegistry(bfg, p1);
+		forceRegistry_->addRegistry(bfg_, p1);
 		forceRegistry_->addRegistry(gF_, p1);
 
-		forceRegistry_->addRegistry(bfg, p2);
+		forceRegistry_->addRegistry(bfg_, p2);
 		forceRegistry_->addRegistry(gF_, p2);
 
-		forceRegistry_->addRegistry(bfg, p3);
+		forceRegistry_->addRegistry(bfg_, p3);
 		forceRegistry_->addRegistry(gF_, p3);
 	}
 	else {
@@ -541,20 +564,20 @@ void ActorSystem::generateBuoyancyDemo() {
 			CreateShape(PxBoxGeometry(3, 3, 3)), Vector3(0, 20, 10), 1, 1, Vector4(1, 0, 1, 1));
 		rb3->setMass(1000);
 
-		BuoyancyForceGenerator* bfg = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
+		bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 0.0, 1.0, 1000);
 
-		forceGen_.push_back(bfg);
+		forceGen_.push_back(bfg_);
 		actors_.push_back(rb1);
 		actors_.push_back(rb2);
 		actors_.push_back(rb3);
 
-		forceRegistry_->addRegistry(bfg, rb1);
+		forceRegistry_->addRegistry(bfg_, rb1);
 		//forceRegistry_->addRegistry(gF_, p1);
 
-		forceRegistry_->addRegistry(bfg, rb2);
+		forceRegistry_->addRegistry(bfg_, rb2);
 		//forceRegistry_->addRegistry(gF_, p2);
 
-		forceRegistry_->addRegistry(bfg, rb3);
+		forceRegistry_->addRegistry(bfg_, rb3);
 		//forceRegistry_->addRegistry(gF_, p3);
 	}
 }
@@ -588,14 +611,14 @@ void ActorSystem::changeK(char k){
 }
 
 void ActorSystem::changeVolume(char v){
-	if (bfg != nullptr) {
-		float currVolumen = bfg->getVolume();
+	if (bfg_ != nullptr && genMode_ == SPRING_MODE_A) {
+		float currVolumen = bfg_->getVolume();
 		int sign = v == '.' ? 1 : -1;
 
-		if (bfg->getVolume() + sign > 0) {
+		if (bfg_->getVolume() + sign > 0) {
 			currVolumen += sign;
-			bfg->setVolume(currVolumen);
-			cout << "v: " << bfg->getVolume();
+			bfg_->setVolume(currVolumen);
+			cout << "v: " << bfg_->getVolume();
 			v == '.' ? cout << " (+)\n" : cout << " (-)\n";
 		}
 	}

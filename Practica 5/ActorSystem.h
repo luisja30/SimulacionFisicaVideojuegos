@@ -61,7 +61,7 @@ class ActorSystem {
 	//Muelles
 	AnchoredSpringFG* anchoredfg_;
 	SpringForceGenerator* springfg_;
-	BuoyancyForceGenerator* bfg;
+	BuoyancyForceGenerator* bfg_ = nullptr;
 public:
 	ActorSystem(PxPhysics* gPhysics, PxScene* gScene,Vector3 pos, double range);
 	virtual ~ActorSystem();
