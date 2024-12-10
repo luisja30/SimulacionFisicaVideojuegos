@@ -46,6 +46,8 @@ Practica 4/debug/**
 /Practica 4/.vs/game/**
 Practica 5/debug/**
 /Practica 5/.vs/game/**
+Frogger/debug/**
+/Frogger/.vs/game/**
 
 # Zip files
 *.zip
