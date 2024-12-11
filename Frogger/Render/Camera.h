@@ -48,6 +48,9 @@ public:
 	physx::PxVec3		getEye()	const;
 	physx::PxVec3		getDir()	const;
 	physx::PxTransform	getTransform() const;
+
+	//Metodo para modificar la posicion de la camara
+	void setView(const physx::PxVec3& eye, const physx::PxVec3& dir);
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;

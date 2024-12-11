@@ -27,6 +27,8 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorSystem.cpp" />
     <ClCompile Include="ActorForceRegistry.cpp" />
+    <ClCompile Include="Frogger\Frogger.cpp" />
+    <ClCompile Include="Frogger\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -56,6 +58,8 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorSystem.h" />
     <ClInclude Include="ActorForceRegistry.h" />
+    <ClInclude Include="Frogger\Frogger.h" />
+    <ClInclude Include="Frogger\GameScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

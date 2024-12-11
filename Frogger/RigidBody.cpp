@@ -38,7 +38,9 @@ RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 
 }
 
 RigidBody::~RigidBody() {
-	rigidDynamic_->release();
+	if (rigidDynamic_ != nullptr) {
+		rigidDynamic_->release();
+	}
 	renderItem_->release();
 	renderItem_ = nullptr;
 }

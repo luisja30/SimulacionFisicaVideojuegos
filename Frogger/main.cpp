@@ -16,11 +16,12 @@
 #include "RigidBody.h"
 #include "RigidSystem.h"
 #include "ActorSystem.h"
+#include "Frogger/Frogger.h"
+#include "Frogger/GameScene.h"
 
 #include <iostream>
 
 std::string display_text = "";
-
 
 using namespace physx;
 
@@ -50,15 +51,12 @@ PxTransform transformAxisX;
 PxTransform transformAxisY;
 PxTransform transformAxisZ;
 
-Particle* particula_ = NULL;
-Projectile* proyectil_ = NULL;
-
 std::vector<Particle*> particles_;
 
-ParticleGenerator* particleSys_ = NULL;
 RigidBody* rb_ = NULL;
-RigidSystem* rigidSys_ = NULL;
 ActorSystem* actorSys_ = NULL;
+Frogger* frog_ = NULL;
+GameScene* game_ = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -90,16 +88,24 @@ void initPhysics(bool interactive)
 	//rb_ = new RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(10, 5, 6)), Vector3(0, 30, 0), 5.0, 1.0, Vector4(0, 0, 1, 1));
 	//rb_->setAngularVelocity(Vector3(0, 5, 0));
 
-	//Suelo
-	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
-	PxShape* shape = CreateShape(PxBoxGeometry(1000, 0.1, 1000));
-	suelo->attachShape(*shape);
-	gScene->addActor(*suelo);
-	RenderItem* item;
-	item = new RenderItem(shape, suelo, { 0,1,1,1 });
+	
 
-	//rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
-	actorSys_ = new ActorSystem(gPhysics, gScene, Vector3(0), 1000);
+
+	//Suelo
+	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({0,-300,0}));
+	//PxShape* shape = CreateShape(PxBoxGeometry(WIDTH, 0.1, HEIGHT));
+	//suelo->attachShape(*shape);
+	//gScene->addActor(*suelo);
+	//RenderItem* item;
+	//item = new RenderItem(shape, suelo, { 1,1,1,1 });
+
+	////rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
+	//actorSys_ = new ActorSystem(gPhysics, gScene, Vector3(0), 1000);
+
+	//Vector3 centerFloor = Vector3(suelo->getGlobalPose().p.x / 2, -290, suelo->getGlobalPose().p.z / 2);
+	//frog_ = new Frogger(gPhysics, gScene, Vector3(centerFloor));
+
+	game_ = new GameScene(gPhysics, gScene);
 }
 
 
@@ -128,7 +134,8 @@ void stepPhysics(bool interactive, double t)
 
 	//particleSys_->update(t);
 	//rigidSys_->update(t);
-	actorSys_->update(t);
+	//actorSys_->update(t);
+	game_->update(t);
 }
 
 // Function to clean data
@@ -137,6 +144,8 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
+	//Borramos el juego
+	delete game_;
 	//DeregisterRenderItem(renderItemCenter);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
@@ -162,72 +171,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particles_.push_back(new Projectile(Vector3(camera.p), Vector3(-100, 0, -100), Vector3(0, 0, 0)));
 		break;
 	}
-	/*case 'Z': {
-		particleSys_->setMode(0);
+	case 'P': {
+		cout << "Dir Camera:"<< GetCamera()->getDir().x << " " << GetCamera()->getDir().y << " " << GetCamera()->getDir().z << endl;
+		cout << "Eye Camera:"<< GetCamera()->getEye().x << " " << GetCamera()->getEye().y << " " << GetCamera()->getEye().z << endl;
 		break;
 	}
-	case 'X': {
-		particleSys_->setMode(1);
-		break;
-	}
-	case 'C': {
-		particleSys_->setMode(2);
-		break;
-	}
-	case 'V': {
-		particleSys_->setMode(3);
-		break;
-	}
-	case 'N': {
-		particleSys_->setMode(4);
-		break;
-	}
-	case '5': {
-		particleSys_->setMode(5);
-		break;
-	}
-	case '6': {
-		particleSys_->setMode(6);
-		break;
-	}
-	case '7': {
-		particleSys_->setMode(7);
-		break;
-	}
-	case '8': {
-		particleSys_->setMode(8);
-		break;
-	}
-	case '-': {
-		particleSys_->changeK('-');
-		break;
-	}
-	case '+': {
-		particleSys_->changeK('+');
-		break;
-	}
-	case '.': {
-		particleSys_->changeVolume('.');
-		break;
-	}
-	case ',': {
-		particleSys_->changeVolume(',');
-		break;
-	}
-	case '0': {
-		particleSys_->changeMass('0');
-		break;
-	}
-	case '9': {
-		particleSys_->changeMass('9');
-		break;
-	}*/
 
 	default:
 		break;
 	}
 
-	actorSys_->keyPressed(key);
+	//actorSys_->keyPressed(key);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
