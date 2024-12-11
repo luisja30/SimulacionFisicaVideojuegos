@@ -15,6 +15,7 @@ GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
 
 	initPlatforms();
 	initPlayer();
+	initEnemies();
 
 	//Seteamos la camara
 	Camera* cam = GetCamera();
@@ -27,24 +28,30 @@ void GameScene::initPlatforms() {
 	//Creacion de las plataformas
 	Platform* leftLimit = new Platform(gPhysics_, gScene_,
 		Vector3(floor_->getGlobalPose().p.x - WIDTH, -290, floor_->getGlobalPose().p.z),
-		20, 20, HEIGHT, Vector4(0, 1, 1, 1));
+		20, 100, HEIGHT, Vector4(0, 1, 1, 1));
 
 	Platform* rightLimit = new Platform(gPhysics_, gScene_,
 		Vector3(floor_->getGlobalPose().p.x + WIDTH, -290, floor_->getGlobalPose().p.z),
-		20, 20, HEIGHT, Vector4(0, 1, 1, 1));
+		20, 100, HEIGHT, Vector4(0, 1, 1, 1));
 
 	Platform* downLimit = new Platform(gPhysics_, gScene_,
 		Vector3(floor_->getGlobalPose().p.x, -290, floor_->getGlobalPose().p.z - HEIGHT),
-		WIDTH, 20, 20, Vector4(0, 1, 1, 1));
+		WIDTH, 100, 20, Vector4(0, 1, 1, 1));
 
 	Platform* upLimit = new Platform(gPhysics_, gScene_,
 		Vector3(floor_->getGlobalPose().p.x, -290, floor_->getGlobalPose().p.z + HEIGHT),
-		WIDTH, 20, 20, Vector4(0, 1, 1, 1));
+		WIDTH, 100, 20, Vector4(0, 1, 1, 1));
 
 	limits_.push_back(leftLimit);
 	limits_.push_back(rightLimit);
 	limits_.push_back(downLimit);
 	limits_.push_back(upLimit);
+}
+
+void GameScene::initEnemies() {
+	Car* car1 = new Car(gPhysics_, gScene_,
+		Vector3(floor_->getGlobalPose().p.x / 2, -290, floor_->getGlobalPose().p.z / 2),
+		1, Vector4(1, 0, 0, 1));
 }
 
 void GameScene::initPlayer() {
@@ -70,6 +77,9 @@ GameScene::~GameScene() {
 	player_ = nullptr;
 
 	//Enemigos
+	for (Car* c : cars_)
+		delete c;
+	cars_.clear();
 }
 
 void GameScene::update(double t) {

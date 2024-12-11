@@ -63,7 +63,7 @@ class ActorSystem {
 	SpringForceGenerator* springfg_;
 	BuoyancyForceGenerator* bfg_ = nullptr;
 public:
-	ActorSystem(PxPhysics* gPhysics, PxScene* gScene,Vector3 pos, double range);
+	ActorSystem(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, double range);
 	virtual ~ActorSystem();
 
 	virtual void update(double t);

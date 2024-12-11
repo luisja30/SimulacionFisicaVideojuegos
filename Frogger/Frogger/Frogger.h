@@ -4,7 +4,7 @@
 
 class Frogger : public RigidBody {
 protected:
-	double jumpSpeed_;
+	double jumpVel_;
 
 public:
 	Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos);
