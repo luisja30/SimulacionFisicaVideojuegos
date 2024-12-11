@@ -182,6 +182,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 
 	//actorSys_->keyPressed(key);
+	game_->keyPressed(key);
+
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

@@ -27,8 +27,13 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorSystem.cpp" />
     <ClCompile Include="ActorForceRegistry.cpp" />
-    <ClCompile Include="Frogger\Frogger.cpp" />
-    <ClCompile Include="Frogger\GameScene.cpp" />
+    <ClCompile Include="Frogger\Frogger.cpp">
+      <Filter>Frogger</Filter>
+    </ClCompile>
+    <ClCompile Include="Frogger\GameScene.cpp">
+      <Filter>Frogger</Filter>
+    </ClCompile>
+    <ClCompile Include="Frogger\Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -58,12 +63,20 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorSystem.h" />
     <ClInclude Include="ActorForceRegistry.h" />
-    <ClInclude Include="Frogger\Frogger.h" />
-    <ClInclude Include="Frogger\GameScene.h" />
+    <ClInclude Include="Frogger\Frogger.h">
+      <Filter>Frogger</Filter>
+    </ClInclude>
+    <ClInclude Include="Frogger\GameScene.h">
+      <Filter>Frogger</Filter>
+    </ClInclude>
+    <ClInclude Include="Frogger\Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Frogger">
+      <UniqueIdentifier>{22de4c44-4041-47aa-97f0-cc99c60fe96d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

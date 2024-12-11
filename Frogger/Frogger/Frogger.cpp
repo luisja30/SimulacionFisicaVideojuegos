@@ -1,8 +1,8 @@
 #include "Frogger.h"
 
 Frogger::Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos)
-	: RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(10, 10, 10)), pos, 1.0, 1.0, Vector4(0, 1, 0, 1)),
-	jumpSpeed_(5) {
+	: RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(15, 15, 15)), pos, 1.0, 1.0, Vector4(0, 1, 0, 1)),
+	jumpSpeed_(100) {
 }
 
 bool Frogger::integrate(double t) {
@@ -10,8 +10,23 @@ bool Frogger::integrate(double t) {
 }
 
 void Frogger::keyPressed(char key) {
+	//Movimiento
+	switch (toupper(key)) {
+	case 'I':
+		move(Vector3(0, 0, -jumpSpeed_ * getMass()));
+		break;
+	case 'K':
+		move(Vector3(0, 0, jumpSpeed_* getMass()));
+		break;
+	case 'J':
+		move(Vector3(-jumpSpeed_* getMass(), 0, 0));
+		break;
+	case 'L':
+		move(Vector3(jumpSpeed_* getMass(), 0, 0));
+		break;
+	}
 }
 
 void Frogger::move(Vector3 v) {
-	//vel_ = 
+	rigidDynamic_->addForce(v);
 }
