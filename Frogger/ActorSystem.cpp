@@ -7,6 +7,12 @@ ActorSystem::ActorSystem(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, doub
 	createForceGenerators();
 }
 
+ActorSystem::ActorSystem(Vector3 pos, double range) :
+	gPhysics_(nullptr), gScene_(nullptr), pos_(pos), range_(range) {
+	forceRegistry_ = new ActorForceRegistry();
+	createForceGenerators();
+}
+
 ActorSystem::~ActorSystem(){
 	//Recorremos la lista y vamos eliminando las partículas para que no quede basura
 	for (Actor* a : actors_)
@@ -106,6 +112,7 @@ void ActorSystem::createFroggerExplosion(int n) {
 	for (int i = 0; i < n; i++) {
 		Vector3 newPos = pos_, newVel = { 0,0,0 };
 		int radius = 5;
+		int size = 10;
 		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.y += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
@@ -118,7 +125,7 @@ void ActorSystem::createFroggerExplosion(int n) {
 
 		if (actorMode_ == PARTICLES) {
 			//Añadimos particula
-			Particle* newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
+			Particle* newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), size, 100, 1.0);
 			newParticle->setColor(newColor);
 			actors_.push_back(newParticle);
 
@@ -126,7 +133,7 @@ void ActorSystem::createFroggerExplosion(int n) {
 		}
 		else {
 			RigidBody* newRigid = new RigidBody(gPhysics_, gScene_,
-				CreateShape(PxSphereGeometry(1)), newPos, 1, 1, newColor);
+				CreateShape(PxSphereGeometry(size)), newPos, 1, 1, newColor);
 			actors_.push_back(newRigid);
 
 			forceRegistry_->addRegistry(explosionF_, newRigid);

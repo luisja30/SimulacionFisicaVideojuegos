@@ -20,7 +20,7 @@ GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
 
 	//Seteamos la camara
 	Camera* cam = GetCamera();
-	cam->setView(PxVec3(-18.0f, 550.0f, 101.0f), PxVec3(0.0f, -0.9f, -0.1f)); //Alejar camara
+	cam->setView(PxVec3(-18.0f, 630.0f, 101.0f), PxVec3(0.0f, -0.9f, -0.1f)); //Alejar camara
 	//cam->setView(PxVec3(-18.0f, -200.0f, 101.0f), PxVec3(0.0f, -0.9f, -0.1f)); //Acercar camara
 }
 
@@ -103,8 +103,7 @@ void GameScene::collisionsPlayerGoals() {
 		bool goalActive = goals_[i]->getActive();
 		if (goals_[i]->insideGoal(playerPos) && goalActive) {
 			resetPlayerPosition();
-			goals_[i]->setActive(false);
-
+			goals_[i]->setGoal();
 			std::cout << "GOAL_ " + to_string(i) + " Ha sido desactivada" << std::endl;
 		}
 
@@ -127,6 +126,8 @@ void GameScene::update(double t) {
 	//Update entidades
 	player_->integrate(t);
 
+	for (Goal* g : goals_)
+		g->update(t);
 
 	//Comprobacion de colisiones
 	collisionsPlayerGoals();

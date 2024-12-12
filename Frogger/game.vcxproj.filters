@@ -40,6 +40,9 @@
     <ClCompile Include="Frogger\Car.cpp">
       <Filter>Frogger</Filter>
     </ClCompile>
+    <ClCompile Include="Frogger\Enemy.cpp">
+      <Filter>Frogger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -80,6 +83,9 @@
       <Filter>Frogger</Filter>
     </ClInclude>
     <ClInclude Include="Frogger\Car.h">
+      <Filter>Frogger</Filter>
+    </ClInclude>
+    <ClInclude Include="Frogger\Enemy.h">
       <Filter>Frogger</Filter>
     </ClInclude>
   </ItemGroup>
