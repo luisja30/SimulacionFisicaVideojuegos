@@ -10,7 +10,6 @@ protected:
 	//Rango de desplazamiento
 	int rangeLeft_, rangeRight_;
 
-
 	//Generador de humo
 	ActorSystem* smokeParticles_;
 

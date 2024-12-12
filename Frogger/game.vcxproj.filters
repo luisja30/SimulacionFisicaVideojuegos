@@ -34,7 +34,12 @@
       <Filter>Frogger</Filter>
     </ClCompile>
     <ClCompile Include="Frogger\Platform.cpp" />
-    <ClCompile Include="Frogger\Car.cpp" />
+    <ClCompile Include="Frogger\Goal.cpp">
+      <Filter>Frogger</Filter>
+    </ClCompile>
+    <ClCompile Include="Frogger\Car.cpp">
+      <Filter>Frogger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -71,7 +76,12 @@
       <Filter>Frogger</Filter>
     </ClInclude>
     <ClInclude Include="Frogger\Platform.h" />
-    <ClInclude Include="Frogger\Car.h" />
+    <ClInclude Include="Frogger\Goal.h">
+      <Filter>Frogger</Filter>
+    </ClInclude>
+    <ClInclude Include="Frogger\Car.h">
+      <Filter>Frogger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

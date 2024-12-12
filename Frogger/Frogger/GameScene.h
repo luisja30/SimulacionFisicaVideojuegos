@@ -6,12 +6,14 @@
 #include "../Frogger/Frogger.h"
 #include "../Frogger/Platform.h"
 #include "../Frogger/Car.h"
+#include "../Frogger/Goal.h"
 
 /* Clase en el que se almacena todo lo que tenga que ver con el juego */
 class GameScene {
 protected:
 	const int WIDTH = 400;
 	const int HEIGHT = 500;
+	const int GOALS = 5;
 
 	PxPhysics* gPhysics_;
 	PxScene* gScene_;
@@ -26,16 +28,28 @@ protected:
 
 	//Coches
 	vector<Car*> cars_;
+	vector<Goal*> goals_;
 
 public:
 	GameScene(PxPhysics* gPhysics, PxScene* gScene);
 	virtual ~GameScene();
 
+	//Inicializadores
 	void initPlayer();
 	void initPlatforms();
 	void initEnemies();
+	void initGoals();
+
+
+	//Colisiones
+	void collisionsPlayerGoals();
+
+
+	void resetPlayerPosition();
+
 
 	void update(double t);
+
 	void keyPressed(char k);
 
 };

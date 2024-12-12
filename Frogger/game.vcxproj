@@ -263,6 +263,7 @@
     <ClCompile Include="ExplosionForceGenerator.cpp" />
     <ClCompile Include="Frogger\Frogger.cpp" />
     <ClCompile Include="Frogger\GameScene.cpp" />
+    <ClCompile Include="Frogger\Goal.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="Frogger\Frogger.h" />
     <ClInclude Include="Frogger\GameScene.h" />
+    <ClInclude Include="Frogger\Goal.h" />
     <ClInclude Include="GravityForceGenerator.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
