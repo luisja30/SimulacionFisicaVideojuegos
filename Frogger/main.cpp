@@ -100,12 +100,14 @@ void initPhysics(bool interactive)
 	//item = new RenderItem(shape, suelo, { 1,1,1,1 });
 
 	////rigidSys_ = new RigidSystem(gPhysics, gScene, Vector3(0), 1000);
-	//actorSys_ = new ActorSystem(gPhysics, gScene, Vector3(0), 1000);
 
 	//Vector3 centerFloor = Vector3(suelo->getGlobalPose().p.x / 2, -290, suelo->getGlobalPose().p.z / 2);
 	//frog_ = new Frogger(gPhysics, gScene, Vector3(centerFloor));
 
-	game_ = new GameScene(gPhysics, gScene);
+	//game_ = new GameScene(gPhysics, gScene);
+	actorSys_ = new ActorSystem(gPhysics, gScene, Vector3(0), 100);
+	actorSys_->setGenMode(RAIN_A);
+	actorSys_->setActorMode(PARTICLES);
 }
 
 
@@ -134,8 +136,8 @@ void stepPhysics(bool interactive, double t)
 
 	//particleSys_->update(t);
 	//rigidSys_->update(t);
-	//actorSys_->update(t);
-	game_->update(t);
+	actorSys_->update(t);
+	//game_->update(t);
 }
 
 // Function to clean data
@@ -145,7 +147,10 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	//Borramos el juego
-	delete game_;
+	//delete game_;
+	
+
+
 	//DeregisterRenderItem(renderItemCenter);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
@@ -181,9 +186,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 
-	//actorSys_->keyPressed(key);
-	game_->keyPressed(key);
-
+	actorSys_->keyPressed(key);
+	//game_->keyPressed(key);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

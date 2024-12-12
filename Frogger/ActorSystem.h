@@ -22,7 +22,9 @@ enum GenerateActorMode {
 	WIND_A,
 	TORNADO_A,
 	EXPLOSION_A,
-	SPRING_MODE_A
+	SPRING_MODE_A,
+	FROGGER_EXPLOSION,
+	FROGGER_SMOKE
 };
 enum ActorMode {
 	PARTICLES,
@@ -33,7 +35,7 @@ class ActorSystem {
 	protected:
 	Vector3 pos_;
 	std::list<Actor*> actors_;
-	int actorCount_ = 0, actorLimit_ = 500;
+	int actorCount_ = 0, actorLimit_ = 150;
 	double range_;
 
 	std::mt19937_64 rd;
@@ -71,6 +73,7 @@ public:
 	void createForceGenerators();
 	ForceGenerator* getForceGenerator(string name);
 	void createExplosion(int n);
+	void createFroggerExplosion(int n);
 
 	void keyPressed(char k);
 	void changeActorMode(char k);
@@ -78,6 +81,11 @@ public:
 	void clearActors();
     void clearForces();
 
+
+	//Setters
+	void setActorMode(ActorMode aMode);
+	void setGenMode(GenerateActorMode genMode);
+	void setLimit(int l);
 	//Muelles
 	void generateSpringAnchoredDemo();
 	void generateSpringDemo(bool elastic);

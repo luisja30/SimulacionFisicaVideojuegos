@@ -100,9 +100,7 @@ void GameScene::collisionsPlayerGoals() {
 	Vector3 playerPos = player_->getPosition();
 
 	for (int i = 0; i < GOALS; i++) {
-		Vector3 GoalPos = goals_[i]->getPosition();
 		bool goalActive = goals_[i]->getActive();
-		
 		if (goals_[i]->insideGoal(playerPos) && goalActive) {
 			resetPlayerPosition();
 			goals_[i]->setActive(false);

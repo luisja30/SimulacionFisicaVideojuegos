@@ -26,7 +26,7 @@ void ActorSystem::createForceGenerators() {
 	invGF_ = new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY");
 
 	//Viento
-	windF_ = new WindForceGenerator(pos_, Vector3(0, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
+	windF_ = new WindForceGenerator(pos_, Vector3(15, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
 
 	//Tornado
 	tornadoF_ = new WhirlwindForceGenerator(pos_, 100.0f, 0.5f, "TORNADO");
@@ -36,7 +36,9 @@ void ActorSystem::createForceGenerators() {
 }
 
 void ActorSystem::update(double t) {
-	if (genMode_ != SPRING_MODE_A && genMode_ != EXPLOSION_A) {
+	if (genMode_ != SPRING_MODE_A 
+		&& genMode_ != EXPLOSION_A
+		&& genMode_ != FROGGER_EXPLOSION) {
 		if (actors_.size() < actorLimit_) {
 			generateActor();
 		}
@@ -98,6 +100,40 @@ void ActorSystem::createExplosion(int n) {
 		}
 		actorCount_++;
 	}
+}
+
+void ActorSystem::createFroggerExplosion(int n) {
+	for (int i = 0; i < n; i++) {
+		Vector3 newPos = pos_, newVel = { 0,0,0 };
+		int radius = 5;
+		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
+		newPos.y += std::normal_distribution<double>(-radius, radius)(rd);
+		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
+
+		double r = std::uniform_real_distribution<double>(0.3, 1.0)(rd);
+		double g = std::uniform_real_distribution<double>(1.0, 1.0)(rd);
+		double b = std::uniform_real_distribution<double>(0.3, 1.0)(rd);
+
+		Vector4 newColor = Vector4(r, g, b, 1);
+
+		if (actorMode_ == PARTICLES) {
+			//Añadimos particula
+			Particle* newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
+			newParticle->setColor(newColor);
+			actors_.push_back(newParticle);
+
+			forceRegistry_->addRegistry(explosionF_, newParticle);
+		}
+		else {
+			RigidBody* newRigid = new RigidBody(gPhysics_, gScene_,
+				CreateShape(PxSphereGeometry(1)), newPos, 1, 1, newColor);
+			actors_.push_back(newRigid);
+
+			forceRegistry_->addRegistry(explosionF_, newRigid);
+		}
+		actorCount_++;
+	}
+
 }
 
 void ActorSystem::generateActor() {
@@ -252,7 +288,39 @@ void ActorSystem::generateActor() {
 			forceRegistry_->addRegistry(tornadoF_, newRigid);
 		}
 		break;
-	
+
+	case FROGGER_SMOKE:
+		radius = 3;
+		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
+		newPos.y = pos_.y;
+		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
+
+		//Las particulas se mueven solo en el eje Y
+		//newVel.y = -50;
+
+		//Añadimos una masa distinta a cada particula/rigido
+		newMass = std::uniform_real_distribution<double>(2.0, 20.0)(rd);
+
+		Vector4 colorGris = Vector4(0.5, 0.5, 0.5, 1);
+		if (actorMode_ == PARTICLES) {
+			//Añadimos particula
+			newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 2, 100, newMass);
+			newParticle->setColor(colorGris);
+			actors_.push_back(newParticle);
+
+			forceRegistry_->addRegistry(windF_, newParticle);
+		}
+		else {
+			newRigid = new RigidBody(gPhysics_, gScene_,
+				CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 1, 1, 1));
+			newRigid->setVelocity(newVel);
+			newRigid->setAliveTime(100);
+			newRigid->setColor(colorGris);
+			actors_.push_back(newRigid);
+
+			forceRegistry_->addRegistry(windF_, newRigid);
+		}
+		break;
 	}
 
 	actorCount_++;
@@ -271,7 +339,7 @@ void ActorSystem::keyPressed(char k) {
 	}
 	case '3': {
 		resetScene();
-		genMode_ = HOSE_A;
+		genMode_ = FROGGER_SMOKE;
 		break;
 	}
 	//Fuerzas
@@ -282,8 +350,9 @@ void ActorSystem::keyPressed(char k) {
 	}
 	case '5': {
 		resetScene();
-		genMode_ = EXPLOSION_A;
-		createExplosion(500);
+		genMode_ = FROGGER_EXPLOSION;
+		//createExplosion(500);
+		createFroggerExplosion(200);
 		break;
 	}
 	//Muelles
@@ -383,6 +452,18 @@ void ActorSystem::clearForces() {
 		}
 		forceGen_.clear();
 	}
+}
+
+void ActorSystem::setActorMode(ActorMode aMode) {
+	actorMode_ = aMode;
+}
+
+void ActorSystem::setGenMode(GenerateActorMode genMode) {
+	genMode_ = genMode;
+}
+
+void ActorSystem::setLimit(int l) {
+	actorLimit_ = l;
 }
 
 void ActorSystem::generateSpringAnchoredDemo() {

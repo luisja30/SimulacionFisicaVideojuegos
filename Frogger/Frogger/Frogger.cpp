@@ -3,6 +3,8 @@
 Frogger::Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos)
 	: RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(15, 15, 15)), pos, 1.0, 1.0, Vector4(0, 1, 0, 1)),
 	jumpVel_(100), initPos_(pos) {
+
+	//particles_ = new ActorSystem();
 }
 
 bool Frogger::integrate(double t) {
