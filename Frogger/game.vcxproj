@@ -259,6 +259,7 @@
     <ClCompile Include="AnchoredSpringFG.cpp" />
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="Frogger\Dock.cpp" />
     <ClCompile Include="Frogger\Enemy.cpp" />
     <ClCompile Include="Frogger\Car.cpp" />
     <ClCompile Include="ExplosionForceGenerator.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="AnchoredSpringFG.h" />
     <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
+    <ClInclude Include="Frogger\Dock.h" />
     <ClInclude Include="Frogger\Enemy.h" />
     <ClInclude Include="Frogger\Car.h" />
     <ClInclude Include="core.hpp" />

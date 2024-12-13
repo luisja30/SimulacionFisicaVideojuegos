@@ -5,7 +5,9 @@
 #include "../ActorSystem.h"
 #include "../Frogger/Frogger.h"
 #include "../Frogger/Platform.h"
+#include "../Frogger/Enemy.h"
 #include "../Frogger/Car.h"
+#include "../Frogger/Dock.h"
 #include "../Frogger/Goal.h"
 
 /* Clase en el que se almacena todo lo que tenga que ver con el juego */
@@ -27,7 +29,7 @@ protected:
 	vector<Platform*> limits_;
 
 	//Coches
-	vector<Car*> cars_;
+	vector<Enemy*> enemies_;
 	vector<Goal*> goals_;
 
 public:

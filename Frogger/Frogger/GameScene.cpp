@@ -41,9 +41,9 @@ GameScene::~GameScene() {
 	player_ = nullptr;
 
 	//Enemigos
-	for (Car* c : cars_)
-		delete c;
-	cars_.clear();
+	for (Enemy* e : enemies_)
+		delete e;
+	enemies_.clear();
 
 	//Metas
 	for (Goal* g : goals_)
@@ -81,7 +81,18 @@ void GameScene::initEnemies() {
 		Vector3(floor_->getGlobalPose().p.x / 2, -290, floor_->getGlobalPose().p.z / 2),
 		1, Vector4(1, 0, 0, 1));
 
-	cars_.push_back(car1);
+	float x = floor_->getGlobalPose().p.x / 2;
+	float y = -290;
+	float z = floor_->getGlobalPose().p.z / 2;
+
+	Vector3 enemyPos = Vector3(x, y, z - 290);
+	Vector3 anchorPos = Vector3(x - (WIDTH - 40), -290, z - 290);
+
+	Dock* dock1 = new Dock(gPhysics_, gScene_,
+		enemyPos, anchorPos, 270);
+
+	enemies_.push_back(car1);
+	enemies_.push_back(dock1);
 }
 
 void GameScene::initGoals() {
@@ -128,6 +139,9 @@ void GameScene::update(double t) {
 
 	for (Goal* g : goals_)
 		g->update(t);
+
+	for (Enemy* e : enemies_)
+		e->updateMove(t);
 
 	//Comprobacion de colisiones
 	collisionsPlayerGoals();

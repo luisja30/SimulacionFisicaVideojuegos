@@ -3,6 +3,9 @@
 Frogger::Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos)
 	: RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(15, 15, 15)), pos, 1.0, 1.0, Vector4(0, 1, 0, 1)),
 	jumpVel_(300), initPos_(pos) {
+
+	float I = (1 / 12) * 1 * (pow(15, 2) + pow(15, 2));
+	setTensorInertia(Vector3(I, I, I));
 }
 
 bool Frogger::integrate(double t) {

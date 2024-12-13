@@ -25,7 +25,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double alive
 }
 
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass, particleForm form)
-	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.998), aliveTime_(aliveTime), isAlive_(true), semi_(false) {
+	: pose_(pos), vel_(vel), acel_(acel), dumping_(0.8), aliveTime_(aliveTime), isAlive_(true), semi_(false) {
 	setMass(mass);
 	force_ = { 0,0,0 };
 	if (form == BOX)

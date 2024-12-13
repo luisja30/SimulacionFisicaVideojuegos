@@ -153,8 +153,8 @@ void ParticleGenerator::generateParticle() {
 		newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
 		newParticle->setColor({ 0,0,1,1 });
 
-		/*newMass = std::normal_distribution<double>(1.0, 20.0)(rd);
-		newParticle->setMass(newMass);*/
+		newMass = std::normal_distribution<double>(1.0, 20.0)(rd);
+		newParticle->setMass(newMass);
 
 		particles_.push_back(newParticle);
 
@@ -341,23 +341,23 @@ void ParticleGenerator::generateSpringDemo(bool elastic) {
 void ParticleGenerator::generateBuoyancyDemo() {
 	//0.5
 	Particle* p1 = new Particle({ 0.0, 20, 0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p1->setMass(1);
+	p1->setMass(1000);
 	p1->setSemiEuler();
 	p1->setColor({ 1.0,1.0,0.0,1.0 }); //Amarilla
 
 	//FLotacion 0.1
 	Particle* p2 = new Particle({ 0.0, 20, -10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p2->setMass(1);
+	p2->setMass(2000);
 	p2->setSemiEuler();
 	p2->setColor({ 1.0,0.0,0.0,1.0 }); //Roja
 
 	//Suspension 1.0
 	Particle* p3 = new Particle({ 0.0, 20, 10.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 3.0f, 100, 1.0, BOX);
-	p3->setMass(10);
+	p3->setMass(900);
 	p3->setSemiEuler();
 	p3->setColor({ 1.0,0.0,1.0,1.0 }); //Morada
 
-	bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 10.0, 10.0, 1);
+	bfg_ = new BuoyancyForceGenerator({ 0, 0 ,0 }, 10.0, 1.0, 1000);
 
 	forceGen_.push_back(bfg_);
 	particles_.push_back(p1);

@@ -43,6 +43,7 @@ public:
 	void setAngularVelocity(Vector3 aVel);
 	void setAliveTime(double aliveTime);
 	void setMass(double m) override;
+	void setTensorInertia(Vector3 t);
 
 	virtual void addForce(const Vector3& f) override;
 	virtual void clearForce() override {};
