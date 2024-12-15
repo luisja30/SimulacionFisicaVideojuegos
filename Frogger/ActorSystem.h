@@ -87,6 +87,10 @@ public:
 	void setActorMode(ActorMode aMode);
 	void setGenMode(GenerateActorMode genMode);
 	void setLimit(int l);
+	void setOriginPos(Vector3 newPos);
+
+	Vector3 getOriginPos() const { return pos_; };
+
 	//Muelles
 	void generateSpringAnchoredDemo();
 	void generateSpringDemo(bool elastic);

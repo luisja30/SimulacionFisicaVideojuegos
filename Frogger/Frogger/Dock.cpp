@@ -4,8 +4,10 @@ Dock::Dock(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, Vector3 anchorPos,
 	:Enemy(gPhysics, gScene, CreateShape(PxSphereGeometry(20)), pos, 1.0, 1.0, Vector4(1, 1, 0, 1)), 
 	initPos_(pos) {
 
+	//Tensor de inercia para la esfera
 	float I = (2 / 5) * getMass() * pow(20, 2);
 	setTensorInertia(Vector3(I,I,I));
+
 	anchorForce_ = new AnchoredSpringFG(20 * getMass(), lenght, anchorPos);
 	forceRegistry_ = new ActorForceRegistry();
 	forceRegistry_->addRegistry(anchorForce_, this);

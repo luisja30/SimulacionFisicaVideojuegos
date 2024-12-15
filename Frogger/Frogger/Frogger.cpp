@@ -16,22 +16,22 @@ void Frogger::keyPressed(char key) {
 	//Movimiento
 	switch (toupper(key)) {
 	case 'I':
-		move(Vector3(0, 0, -jumpVel_ * getMass()));
+		move(Vector3(0, 0, -jumpVel_));
 		break;
 	case 'K':
-		move(Vector3(0, 0, jumpVel_* getMass()));
+		move(Vector3(0, 0, jumpVel_));
 		break;
 	case 'J':
-		move(Vector3(-jumpVel_* getMass(), 0, 0));
+		move(Vector3(-jumpVel_, 0, 0));
 		break;
 	case 'L':
-		move(Vector3(jumpVel_* getMass(), 0, 0));
+		move(Vector3(jumpVel_, 0, 0));
 		break;
 	}
 }
 
 void Frogger::move(Vector3 v) {
-	rigidDynamic_->addForce(v);
+	rigidDynamic_->setLinearVelocity(v);
 }
 
 void Frogger::resetPosition() {

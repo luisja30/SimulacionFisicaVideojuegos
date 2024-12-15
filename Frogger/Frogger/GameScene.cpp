@@ -77,9 +77,21 @@ void GameScene::initPlatforms() {
 }
 
 void GameScene::initEnemies() {
-	Car* car1 = new Car(gPhysics_, gScene_,
-		Vector3(floor_->getGlobalPose().p.x / 2, -290, floor_->getGlobalPose().p.z / 2),
-		1, Vector4(1, 0, 0, 1));
+
+	int nCars = 3;
+	int nDock = 2;
+
+	Vector3 posCars = Vector3(floor_->getGlobalPose().p.x / 2, -290, floor_->getGlobalPose().p.z + 250);
+	int distanceCars = 150; 
+
+	for (int i = 0; i < nCars; i++) {
+		Car* carAux = new Car(gPhysics_, gScene_, posCars, 1, Vector4(1, 0, 0, 1));
+		enemies_.push_back(carAux);
+		posCars += Vector3(0, 0, -distanceCars);
+	}
+
+
+	//Vector3 posSprings = Vector3(floor_->getGlobalPose().p.x / 2 - (WIDTH - 40), -290, floor_->getGlobalPose().p.z / 2);
 
 	float x = floor_->getGlobalPose().p.x / 2;
 	float y = -290;
@@ -88,11 +100,18 @@ void GameScene::initEnemies() {
 	Vector3 enemyPos = Vector3(x, y, z - 290);
 	Vector3 anchorPos = Vector3(x - (WIDTH - 40), -290, z - 290);
 
+
 	Dock* dock1 = new Dock(gPhysics_, gScene_,
 		enemyPos, anchorPos, 270);
 
-	enemies_.push_back(car1);
+	enemyPos = Vector3(x, y, z - 200);
+	anchorPos = Vector3(x + (WIDTH - 40), -290, z - 200);
+
+	Dock* dock2 = new Dock(gPhysics_, gScene_,
+		enemyPos, anchorPos, 270);
+
 	enemies_.push_back(dock1);
+	enemies_.push_back(dock2);
 }
 
 void GameScene::initGoals() {

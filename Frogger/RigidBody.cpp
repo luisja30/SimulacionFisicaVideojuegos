@@ -26,7 +26,7 @@ RigidBody::~RigidBody() {
 }
 
 bool RigidBody::integrate(double t) {
-	//Actualizo posicion
+	//Actualizo posicion (para muelles)
 	Vector3 vel = getVel();
 	vel = vel*  pow(dumping_, t);
 	tr_.p += vel * t;

@@ -32,7 +32,7 @@ void ActorSystem::createForceGenerators() {
 	invGF_ = new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY");
 
 	//Viento
-	windF_ = new WindForceGenerator(pos_, Vector3(15, 100, 0), 70.0f, 1.0f, 0.0f, "WIND");
+	windF_ = new WindForceGenerator(pos_, Vector3(40, 10, 0), 70.0f, 1.0f, 0.0f, "WIND");
 
 	//Tornado
 	tornadoF_ = new WhirlwindForceGenerator(pos_, 100.0f, 0.5f, "TORNADO");
@@ -311,7 +311,7 @@ void ActorSystem::generateActor() {
 		Vector4 colorGris = Vector4(0.5, 0.5, 0.5, 1);
 		if (actorMode_ == PARTICLES) {
 			//Añadimos particula
-			newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 2, 100, newMass);
+			newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 5, 100, newMass);
 			newParticle->setColor(colorGris);
 			actors_.push_back(newParticle);
 
@@ -319,7 +319,7 @@ void ActorSystem::generateActor() {
 		}
 		else {
 			newRigid = new RigidBody(gPhysics_, gScene_,
-				CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 1, 1, 1));
+				CreateShape(PxSphereGeometry(5)), newPos, 1, 1, Vector4(0, 1, 1, 1));
 			newRigid->setVelocity(newVel);
 			newRigid->setAliveTime(100);
 			newRigid->setColor(colorGris);
@@ -471,6 +471,10 @@ void ActorSystem::setGenMode(GenerateActorMode genMode) {
 
 void ActorSystem::setLimit(int l) {
 	actorLimit_ = l;
+}
+
+void ActorSystem::setOriginPos(Vector3 newPos) {
+	pos_ = newPos;
 }
 
 void ActorSystem::generateSpringAnchoredDemo() {
