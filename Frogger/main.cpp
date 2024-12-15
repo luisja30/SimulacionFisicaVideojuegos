@@ -191,6 +191,9 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+
+	if (game_ != nullptr)
+		game_->onCollision(actor1, actor2);
 }
 
 

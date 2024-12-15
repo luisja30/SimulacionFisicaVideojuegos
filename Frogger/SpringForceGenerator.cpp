@@ -21,6 +21,8 @@ void SpringForceGenerator::updateForce(Actor* a) {
 
 		Vector3 force = relative_pos_vector * delta_x * k_;
 
-		a->addForce(force);
+		//a->addForce(force);
+		RigidBody* rb = static_cast<RigidBody*>(a);
+		rb->setLinearVelocity(force);
 	}
 }

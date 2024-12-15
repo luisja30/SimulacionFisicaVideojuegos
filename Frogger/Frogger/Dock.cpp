@@ -8,7 +8,7 @@ Dock::Dock(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, Vector3 anchorPos,
 	float I = (2 / 5) * getMass() * pow(20, 2);
 	setTensorInertia(Vector3(I,I,I));
 
-	anchorForce_ = new AnchoredSpringFG(20 * getMass(), lenght, anchorPos);
+	anchorForce_ = new AnchoredSpringFG(1/* * getMass()*/ , lenght, anchorPos);
 	forceRegistry_ = new ActorForceRegistry();
 	forceRegistry_->addRegistry(anchorForce_, this);
 }

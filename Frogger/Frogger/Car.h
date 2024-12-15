@@ -5,20 +5,24 @@
 
 class Car : public Enemy {
 protected:
-	double carVel_ = 20;
-	int dir;
-	//Rango de desplazamiento
-	int rangeLeft_, rangeRight_;
-
+	//Velocidad
+	double carVel_;
+	//Direccion y rango de desplazamiento
+	int dir_,range_;
+	//Posicion inicial del coche
+	Vector3 initPos_;
 	//Generador de humo
 	ActorSystem* smokeParticles_;
 
 public:
-	Car(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, int d, Vector4 c);
+	Car(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, double vel, int d, int r, Vector4 c);
 	virtual ~Car();
 	void moveCar(Vector3 m);
+	void resetPosition();
 
 	virtual void updateMove(double t) override;
 	virtual void checkCollisions(Vector3 pos) override;
+
+
 };
 

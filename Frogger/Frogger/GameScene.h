@@ -43,8 +43,11 @@ public:
 	void initGoals();
 
 
-	//Colisiones
+	//Colisiones con las metas
 	void collisionsPlayerGoals();
+
+	//Colisiones entre solidos rigidos (jugador y enemigos)
+	void onCollision(PxActor* actor1, PxActor* actor2);
 
 
 	void resetPlayerPosition();

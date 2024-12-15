@@ -16,6 +16,7 @@ protected:
 	PxShape* shape_;
 	PxRigidDynamic* rigidDynamic_;
 	PxMaterial* material_;
+	PxRigidActor* rigidActor_;
 
 	Vector4 color_;
 	double dumping_; // 0 < d < 1
@@ -37,9 +38,10 @@ public:
 	virtual Vector3 getVel() override;
 	virtual double getMass() override;
 	inline bool getAlive() const { return isAlive_; };
+	PxRigidActor* getRigidActor() const { return rigidActor_; };
 
 
-	void setVelocity(Vector3 vel);
+	void setLinearVelocity(Vector3 vel);
 	void setAngularVelocity(Vector3 aVel);
 	void setAliveTime(double aliveTime);
 	void setMass(double m) override;

@@ -11,6 +11,7 @@ RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 
 	PxRigidBodyExt::updateMassAndInertia(*rigidDynamic_, mass_ / volume_);
 
 	gScene_->addActor(*rigidDynamic_);
+	rigidActor_ = rigidDynamic_;
 
 	renderItem_ = new RenderItem(shape_, rigidDynamic_, color_);
 	setAliveTime(1000);
@@ -18,6 +19,8 @@ RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 
 }
 
 RigidBody::~RigidBody() {
+	//gScene_->removeActor(*rigidActor_);
+
 	if (rigidDynamic_ != nullptr) {
 		rigidDynamic_->release();
 	}
@@ -51,7 +54,7 @@ double RigidBody::getMass() {
 	return rigidDynamic_->getMass();
 }
 
-void RigidBody::setVelocity(Vector3 vel) {
+void RigidBody::setLinearVelocity(Vector3 vel) {
 	rigidDynamic_->setLinearVelocity(vel);
 }
 

@@ -6,9 +6,21 @@ Frogger::Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos)
 
 	float I = (1 / 12) * 1 * (pow(15, 2) + pow(15, 2));
 	setTensorInertia(Vector3(I, I, I));
+
+	explosionParticles_ = new ActorSystem(initPos_, 100);
+	explosionParticles_->setActorMode(PARTICLES);
+	explosionParticles_->setGenMode(EXPLOSION_A);
+}
+
+Frogger::~Frogger() {
+	delete explosionParticles_;
+	explosionParticles_ = nullptr;
 }
 
 bool Frogger::integrate(double t) {
+
+	if (explosionParticles_ != nullptr)
+		explosionParticles_->update(t);
 	return RigidBody::integrate(t);
 }
 
@@ -39,4 +51,13 @@ void Frogger::resetPosition() {
 	rigidDynamic_->setGlobalPose(tr_);
 	rigidDynamic_->setLinearVelocity(Vector3(0));
 	rigidDynamic_->setAngularVelocity(Vector3(0));
-};
+}
+void Frogger::createDeathExplosion() {
+
+	Vector3 explosionPos = this->getPosition() + Vector3(0, 60, 0);
+
+	explosionParticles_->setOriginPos(explosionPos); //Cambiamos pos del generador de particulas
+	explosionParticles_->getExplosionForceGenerator()->changeOriginPos(explosionPos); //Cambiamos pos de origen de la explosion
+	explosionParticles_->createExplosion(100);
+}
+;

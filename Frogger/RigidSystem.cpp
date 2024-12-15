@@ -124,7 +124,7 @@ void RigidSystem::generateRigid() {
 
 		//Añadimos particula
 		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 0, 1, 1));
-		newRigid->setVelocity(newVel);
+		newRigid->setLinearVelocity(newVel);
 		newRigid->setAliveTime(3);
 		rigidBodies_.push_back(newRigid);
 
@@ -146,7 +146,7 @@ void RigidSystem::generateRigid() {
 		newLifeTime = std::uniform_real_distribution<double>(9, 15)(rd);
 		//Añadimos particula
 		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(1, 1, 1, 1));
-		newRigid->setVelocity(newVel);
+		newRigid->setLinearVelocity(newVel);
 		newRigid->setAliveTime(newLifeTime);
 
 		rigidBodies_.push_back(newRigid);
@@ -165,7 +165,7 @@ void RigidSystem::generateRigid() {
 		size = std::uniform_real_distribution<float>(1.0f, 6.0f)(rd);
 		//Añadimos particula
 		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(size)), newPos, 1, 1, Vector4(0, 0, 1, 1));
-		newRigid->setVelocity(newVel);
+		newRigid->setLinearVelocity(newVel);
 		newRigid->setAliveTime(2);
 		rigidBodies_.push_back(newRigid);
 		break;
@@ -180,7 +180,7 @@ void RigidSystem::generateRigid() {
 		//newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
 		//newParticle->setColor({ 0,0,1,1 });
 		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 0, 1, 1));
-		newRigid->setVelocity(newVel); 
+		newRigid->setLinearVelocity(newVel); 
 		newRigid->setAliveTime(100);
 		rigidBodies_.push_back(newRigid);
 
@@ -207,7 +207,7 @@ void RigidSystem::generateRigid() {
 		//particles_.push_back(newParticle);
 
 		newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 1, 1, 1));
-		newRigid->setVelocity(newVel);
+		newRigid->setLinearVelocity(newVel);
 		newRigid->setAliveTime(100);
 		rigidBodies_.push_back(newRigid);
 

@@ -43,7 +43,9 @@
     <ClCompile Include="Frogger\Enemy.cpp">
       <Filter>Frogger</Filter>
     </ClCompile>
-    <ClCompile Include="Frogger\Dock.cpp" />
+    <ClCompile Include="Frogger\Dock.cpp">
+      <Filter>Frogger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -89,7 +91,9 @@
     <ClInclude Include="Frogger\Enemy.h">
       <Filter>Frogger</Filter>
     </ClInclude>
-    <ClInclude Include="Frogger\Dock.h" />
+    <ClInclude Include="Frogger\Dock.h">
+      <Filter>Frogger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -90,6 +90,8 @@ public:
 	void setOriginPos(Vector3 newPos);
 
 	Vector3 getOriginPos() const { return pos_; };
+	ForceGenerator* getExplosionForceGenerator() const { return explosionF_; };
+	ForceGenerator* getWindForceGenerator() const { return windF_; };
 
 	//Muelles
 	void generateSpringAnchoredDemo();

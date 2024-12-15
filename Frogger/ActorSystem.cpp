@@ -85,13 +85,14 @@ void ActorSystem::createExplosion(int n) {
 	for (int i = 0; i < n; i++) {
 		Vector3 newPos = pos_, newVel = { 0,0,0 };
 		int radius = 5;
+		int size = 5;
 		newPos.x += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.y += std::normal_distribution<double>(-radius, radius)(rd);
 		newPos.z += std::normal_distribution<double>(-radius, radius)(rd);
 
 		if (actorMode_ == PARTICLES) {
 			//Añadimos particula
-			Particle* newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), 1, 100, 1.0);
+			Particle* newParticle = new Particle(newPos, newVel, Vector3(0, 0, 0), size, 100, 1.0);
 			newParticle->setColor({ 1,0,0,1 });
 			actors_.push_back(newParticle);
 
@@ -175,7 +176,7 @@ void ActorSystem::generateActor() {
 		else {
 			//Añadimos rigido
 			newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 0, 1, 1));
-			newRigid->setVelocity(newVel);
+			newRigid->setLinearVelocity(newVel);
 			newRigid->setAliveTime(3);
 			actors_.push_back(newRigid);
 
@@ -207,7 +208,7 @@ void ActorSystem::generateActor() {
 		else {
 			//Añadimos particula
 			newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(1, 1, 1, 1));
-			newRigid->setVelocity(newVel);
+			newRigid->setLinearVelocity(newVel);
 			newRigid->setAliveTime(newLifeTime);
 			newRigid->disableGravity();
 
@@ -235,7 +236,7 @@ void ActorSystem::generateActor() {
 		else {
 			//Añadimos particula
 			newRigid = new RigidBody(gPhysics_, gScene_, CreateShape(PxSphereGeometry(size)), newPos, 1, 1, Vector4(0, 0, 1, 1));
-			newRigid->setVelocity(newVel);
+			newRigid->setLinearVelocity(newVel);
 			newRigid->setAliveTime(2);
 			actors_.push_back(newRigid);
 		}
@@ -288,7 +289,7 @@ void ActorSystem::generateActor() {
 		else {
 			newRigid = new RigidBody(gPhysics_, gScene_, 
 				CreateShape(PxSphereGeometry(1)), newPos, 1, 1, Vector4(0, 1, 1, 1));
-			newRigid->setVelocity(newVel);
+			newRigid->setLinearVelocity(newVel);
 			newRigid->setAliveTime(100);
 			actors_.push_back(newRigid);
 
@@ -320,7 +321,7 @@ void ActorSystem::generateActor() {
 		else {
 			newRigid = new RigidBody(gPhysics_, gScene_,
 				CreateShape(PxSphereGeometry(5)), newPos, 1, 1, Vector4(0, 1, 1, 1));
-			newRigid->setVelocity(newVel);
+			newRigid->setLinearVelocity(newVel);
 			newRigid->setAliveTime(100);
 			newRigid->setColor(colorGris);
 			actors_.push_back(newRigid);

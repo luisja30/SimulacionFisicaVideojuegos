@@ -27,5 +27,9 @@ public:
 		isActive_ = active;
 	}
 
+	void changeOriginPos(Vector3 pos) {
+		pos_ = pos;
+	}
+
 	inline bool getActive() { return isActive_; }
 };
