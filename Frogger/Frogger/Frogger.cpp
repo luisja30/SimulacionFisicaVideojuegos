@@ -2,7 +2,7 @@
 
 Frogger::Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos)
 	: RigidBody(gPhysics, gScene, CreateShape(PxBoxGeometry(15, 15, 15)), pos, 1.0, 1.0, Vector4(0, 1, 0, 1)),
-	vel_(150), canJump_(true), timer_(0), delayTimer_(1), initPos_(pos) {
+	latVel_(100), upVel_(140), canJump_(true), timer_(0), delayTimer_(1), initPos_(pos) {
 
 	//Seteo manual de inercia para cubo solido
 	float I = (1 / 12) * 1 * (pow(15, 2) + pow(15, 2));
@@ -14,6 +14,8 @@ Frogger::Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos)
 	explosionParticles_ = new ActorSystem(initPos_, 100);
 	explosionParticles_->setActorMode(PARTICLES);
 	explosionParticles_->setGenMode(EXPLOSION_A);
+
+	rigidActor_->setName("player");
 }
 
 Frogger::~Frogger() {
@@ -44,16 +46,16 @@ void Frogger::keyPressed(char key) {
 		//Movimiento
 		switch (toupper(key)) {
 		case 'I':
-			move(Vector3(0, 0, -vel_));
+			move(Vector3(0, 0, -upVel_));
 			break;
 		case 'K':
-			move(Vector3(0, 0, vel_));
+			move(Vector3(0, 0, upVel_));
 			break;
 		case 'J':
-			move(Vector3(-vel_, 0, 0));
+			move(Vector3(-latVel_, 0, 0));
 			break;
 		case 'L':
-			move(Vector3(vel_, 0, 0));
+			move(Vector3(latVel_, 0, 0));
 			break;
 		}
 	}

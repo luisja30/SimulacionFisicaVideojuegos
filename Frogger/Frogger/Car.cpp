@@ -12,6 +12,8 @@ Car::Car(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos,double vel, int d, in
 
 	float I = (1 / 12) * 1 * (pow(20, 2) + pow(20, 2));
 	setTensorInertia(Vector3(I, I, I));
+
+	rigidActor_->setName("car");
 }
 
 Car::~Car() {
@@ -51,6 +53,5 @@ void Car::updateMove(double t) {
 }
 
 void Car::checkCollisions(Vector3 pos) {
-
 }
 

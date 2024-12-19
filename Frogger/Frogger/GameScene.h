@@ -21,20 +21,30 @@ protected:
 	PxScene* gScene_;
 
 	/* Elementos del juego */
+
+	//Juagdor
 	Frogger* player_;
+
+	//Suelo
 	PxRigidStatic* floor_;
 	RenderItem* renderItemFloor_;
 
-	//Platform* floor_;
+	//limites
 	vector<Platform*> limits_;
 
-	//Coches
+	//Enemigos
 	vector<Enemy*> enemies_;
+
+	//Metas
 	vector<Goal*> goals_;
+
+	//Variables locales
+	int currGoals_;
+	bool endGame_;
 
 public:
 	GameScene(PxPhysics* gPhysics, PxScene* gScene);
-	virtual ~GameScene();
+	virtual ~GameScene(); //eliminacion de instancias de los objetos en escena 
 
 	//Inicializadores
 	void initPlayer();
@@ -49,12 +59,13 @@ public:
 	//Colisiones entre solidos rigidos (jugador y enemigos)
 	void onCollision(PxActor* actor1, PxActor* actor2);
 
-
+	//Resetea la posicion del player
 	void resetPlayerPosition();
 
+	void endGame();
 
+	//Metodos que se llaman en main.cpp
 	void update(double t);
-
 	void keyPressed(char k);
 
 };

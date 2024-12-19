@@ -1,7 +1,7 @@
 #include "GameScene.h"
 
 GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
-	gPhysics_(gPhysics), gScene_(gScene) {
+	gPhysics_(gPhysics), gScene_(gScene), currGoals_(0), endGame_(false){
 
 	//Creacion del suelo
 	floor_ = gPhysics->createRigidStatic(PxTransform({ 0,-300,0 }));
@@ -18,9 +18,6 @@ GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
 	gScene->addActor(*floor_);
 	renderItemFloor_ = new RenderItem(shape, floor_, { 1,1,1,1 });
 
-	/*floor_ = new Platform(gPhysics_, gScene_, Vector3(0, -300, 0),
-		WIDTH, 0.1, HEIGHT, Vector4(1, 1, 1, 1));*/
-
 	initPlatforms();
 	initPlayer();
 	initEnemies();
@@ -34,6 +31,7 @@ GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
 
 GameScene::~GameScene() {
 
+	//Borramos lo elementos
 	floor_->release();
 	renderItemFloor_->release();
 	renderItemFloor_ = nullptr;
@@ -142,12 +140,16 @@ void GameScene::collisionsPlayerGoals() {
 	for (int i = 0; i < GOALS; i++) {
 		bool goalActive = goals_[i]->getActive();
 		if (goals_[i]->insideGoal(playerPos) && goalActive) {
-			//player_->createDeathExplosion();
 			resetPlayerPosition();
 			goals_[i]->setGoal();
-			std::cout << "GOAL_ " + to_string(i) + " Ha sido desactivada" << std::endl;
+			currGoals_++;
+			//std::cout << "GOAL_ " + to_string(i) + " Ha sido desactivada" << std::endl;
 		}
+	}
 
+	if (currGoals_ >= GOALS) {
+		endGame();
+		endGame_ = true; // desactivamos el input si acaba la partida
 	}
 }
 
@@ -158,6 +160,7 @@ void GameScene::onCollision(PxActor* actor1, PxActor* actor2) {
 				player_->createDeathExplosion();
 				resetPlayerPosition();
 
+				//Si es un muelle reseteamos su posicion para que no se desvie de su trayectoria
 				if (e->getRigidActor()->getName() == "DockEnemy") {
 					Dock* d = static_cast<Dock*>(e);
 					d->resetPosition();
@@ -179,6 +182,13 @@ void GameScene::initPlayer() {
 
 
 
+void GameScene::endGame() {
+	//Si se completan todas las metas, se hace una explosion final indicando que el juego ha acabado
+	for (Goal* g : goals_)
+		g->setGoal();
+	currGoals_ = 0;
+}
+
 void GameScene::update(double t) {
 	//Update entidades
 	player_->integrate(t);
@@ -189,10 +199,11 @@ void GameScene::update(double t) {
 	for (Enemy* e : enemies_)
 		e->updateMove(t);
 
-	//Comprobacion de colisiones
+	//Comprobacion de colisiones con las metas
 	collisionsPlayerGoals();
 }
 
 void GameScene::keyPressed(char k) {
-	player_->keyPressed(k);
+	if (!endGame_)
+		player_->keyPressed(k);
 }

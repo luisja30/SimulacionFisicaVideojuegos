@@ -5,7 +5,7 @@
 
 class Frogger : public RigidBody {
 protected:
-	double vel_, timer_, delayTimer_;
+	double latVel_, upVel_, timer_, delayTimer_;
 	bool canJump_;
 	Vector3 initPos_;
 	ActorSystem* explosionParticles_;
