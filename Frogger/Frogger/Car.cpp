@@ -4,6 +4,7 @@ Car::Car(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos,double vel, int d, in
 	: Enemy(gPhysics, gScene, CreateShape(PxBoxGeometry(20, 20, 20)), pos, 1.0, 1.0, c),
 	dir_(d), range_(r), initPos_(pos), carVel_(vel) {
 
+	setMass(20);
 	smokeParticles_ = new ActorSystem(pos + Vector3(0,50,0), 100);
 	smokeParticles_->setActorMode(PARTICLES);
 	smokeParticles_->setGenMode(FROGGER_SMOKE);

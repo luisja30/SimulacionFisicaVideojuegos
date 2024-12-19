@@ -47,13 +47,13 @@ void ActorSystem::createForceGenerators() {
 	invGF_ = new GravityForceGenerator(Vector3(0, 9.8, 0), "INVERSE_GRAVITY");
 
 	//Viento
-	windF_ = new WindForceGenerator(pos_, Vector3(40, 10, 0), 70.0f, 1.0f, 0.0f, "WIND");
+	windF_ = new WindForceGenerator(pos_, Vector3(-40, 40, 0), 40.0f, 1.0f, 0.0f, "WIND");
 
 	//Tornado
 	tornadoF_ = new WhirlwindForceGenerator(pos_, 100.0f, 0.5f, "TORNADO");
 
 	//Explosion
-	explosionF_ = new ExplosionForceGenerator(pos_, 10000000, 1000, 900000, "EXPLOSION");
+	explosionF_ = new ExplosionForceGenerator(pos_, 100, 1000, 900000, "EXPLOSION");
 }
 
 void ActorSystem::update(double t) {

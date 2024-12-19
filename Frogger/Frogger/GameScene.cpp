@@ -90,7 +90,7 @@ void GameScene::initEnemies() {
 	int distanceCars = 155; 
 	int range = WIDTH * 2 - 100;
 
-	Car* car1 = new Car(gPhysics_, gScene_, posCarsLeft, 200, 1, range, Vector4(1, 0, 0, 1));
+	Car* car1 = new Car(gPhysics_, gScene_, posCarsLeft, 210, 1, range, Vector4(1, 0, 0, 1));
 	enemies_.push_back(car1);
 
 	posCarsLeft += Vector3(0, 0, -distanceCars); posCarsRight += Vector3(0, 0, -distanceCars);
