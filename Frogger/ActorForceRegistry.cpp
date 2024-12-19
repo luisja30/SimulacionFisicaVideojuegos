@@ -4,6 +4,7 @@ ActorForceRegistry::ActorForceRegistry(){
 }
 
 ActorForceRegistry::~ActorForceRegistry(){
+	registryForces_.clear();
 }
 
 void ActorForceRegistry::addRegistry(ForceGenerator* forceGen, Actor* a){

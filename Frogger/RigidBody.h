@@ -46,6 +46,7 @@ public:
 	void setAliveTime(double aliveTime);
 	void setMass(double m) override;
 	void setTensorInertia(Vector3 t);
+	void setMaterial(float restitution, float staticFriction, float dynamicFriction);
 
 	virtual void addForce(const Vector3& f) override;
 	virtual void clearForce() override {};

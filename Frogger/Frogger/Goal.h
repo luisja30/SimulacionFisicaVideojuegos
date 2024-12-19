@@ -22,8 +22,5 @@ public:
 	inline bool getActive() { return isActive_; };
 	void setGoal();
 	bool insideGoal(Vector3 pos);
-
-
-
 };
 

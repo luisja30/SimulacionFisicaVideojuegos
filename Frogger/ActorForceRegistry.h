@@ -3,7 +3,6 @@
 #include <map>
 #include "Actor.h"
 #include "ForceGenerator.h"
-
 using namespace std;
 
 class ActorForceRegistry {

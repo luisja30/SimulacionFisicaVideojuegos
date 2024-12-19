@@ -5,11 +5,10 @@
 
 class Frogger : public RigidBody {
 protected:
-	double jumpVel_;
+	double vel_, timer_, delayTimer_;
+	bool canJump_;
 	Vector3 initPos_;
-
 	ActorSystem* explosionParticles_;
-
 public:
 	Frogger(PxPhysics* gPhysics, PxScene* gScene, Vector3 pos);
 	virtual ~Frogger();

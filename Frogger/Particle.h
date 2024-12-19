@@ -5,6 +5,7 @@
 #include "RenderUtils.hpp"
 #include "Actor.h"
 #include <iostream>
+
 using namespace physx;
 
 enum particleForm {
@@ -34,7 +35,7 @@ public:
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass);
 	Particle(Vector3 pos, Vector3 vel, Vector3 acel, float r, double aliveTime, double mass, particleForm form);
-	~Particle();
+	virtual ~Particle();
 
 	//Setters
 	void setColor(Vector4 color);

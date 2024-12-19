@@ -6,6 +6,14 @@ GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
 	//Creacion del suelo
 	floor_ = gPhysics->createRigidStatic(PxTransform({ 0,-300,0 }));
 	PxShape* shape = CreateShape(PxBoxGeometry(WIDTH, 0.1, HEIGHT));
+
+	float staticFriction = 1.0f;  
+	float dynamicFriction = 1.0f;  
+	float restitution = 1.0f;      
+	PxMaterial* groundMaterial = gPhysics->createMaterial(staticFriction, dynamicFriction, restitution);
+
+	shape->setMaterials(&groundMaterial, 1);
+
 	floor_->attachShape(*shape);
 	gScene->addActor(*floor_);
 	renderItemFloor_ = new RenderItem(shape, floor_, { 1,1,1,1 });
@@ -25,8 +33,7 @@ GameScene::GameScene(PxPhysics* gPhysics, PxScene* gScene) :
 }
 
 GameScene::~GameScene() {
-	//Floor
-	//delete floor_;
+
 	floor_->release();
 	renderItemFloor_->release();
 	renderItemFloor_ = nullptr;
@@ -49,7 +56,6 @@ GameScene::~GameScene() {
 	for (Goal* g : goals_)
 		delete g;
 	goals_.clear();
-
 }
 
 void GameScene::initPlatforms() {
@@ -78,12 +84,11 @@ void GameScene::initPlatforms() {
 
 void GameScene::initEnemies() {
 	//Coches
-	Vector3 posCarsLeft = Vector3(floor_->getGlobalPose().p.x - 380, -290, floor_->getGlobalPose().p.z + 250);
-	Vector3 posCarsRight = Vector3(floor_->getGlobalPose().p.x + 380, -290, floor_->getGlobalPose().p.z + 250);
+	Vector3 posCarsLeft = Vector3(floor_->getGlobalPose().p.x - 380, -290, floor_->getGlobalPose().p.z + 280);
+	Vector3 posCarsRight = Vector3(floor_->getGlobalPose().p.x + 380, -290, floor_->getGlobalPose().p.z + 280);
 
-	int distanceCars = 150; 
+	int distanceCars = 155; 
 	int range = WIDTH * 2 - 100;
-	double vel = 200;
 
 	Car* car1 = new Car(gPhysics_, gScene_, posCarsLeft, 200, 1, range, Vector4(1, 0, 0, 1));
 	enemies_.push_back(car1);
@@ -95,25 +100,25 @@ void GameScene::initEnemies() {
 
 	posCarsLeft += Vector3(0, 0, -distanceCars); posCarsRight += Vector3(0, 0, -distanceCars);
 
-	Car* car3 = new Car(gPhysics_, gScene_, posCarsLeft, 900, 1, range, Vector4(1, 0, 0, 1));
+	Car* car3 = new Car(gPhysics_, gScene_, posCarsLeft, 550, 1, range, Vector4(1, 0, 0, 1));
 	enemies_.push_back(car3);
 
 	//Muelles
 	float x = floor_->getGlobalPose().p.x / 2;
-	float y = -290;
+	float y = -260;
 	float z = floor_->getGlobalPose().p.z / 2;
 
 	Vector3 enemyPos = Vector3(x, y, z - 290);
-	Vector3 anchorPos = Vector3(x - (WIDTH - 40), -290, z - 290);
+	Vector3 anchorPos = Vector3(x - (WIDTH - 40), y, z - 290);
 
 	Dock* dock1 = new Dock(gPhysics_, gScene_,
-		enemyPos, anchorPos, 270);
+		enemyPos, anchorPos, 250 , 1);
 
 	enemyPos = Vector3(x, y, z - 200);
-	anchorPos = Vector3(x + (WIDTH - 40), -290, z - 200);
+	anchorPos = Vector3(x + (WIDTH - 40), y , z - 200);
 
 	Dock* dock2 = new Dock(gPhysics_, gScene_,
-		enemyPos, anchorPos, 270);
+		enemyPos, anchorPos, 250, 3);
 
 	enemies_.push_back(dock1);
 	enemies_.push_back(dock2);
@@ -152,6 +157,11 @@ void GameScene::onCollision(PxActor* actor1, PxActor* actor2) {
 			if (actor1 == player_->getRigidActor() || actor2 == player_->getRigidActor()) {
 				player_->createDeathExplosion();
 				resetPlayerPosition();
+
+				if (e->getRigidActor()->getName() == "DockEnemy") {
+					Dock* d = static_cast<Dock*>(e);
+					d->resetPosition();
+				}
 			}
 		}
 	}

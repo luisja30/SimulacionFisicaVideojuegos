@@ -10,6 +10,10 @@ RigidBody::RigidBody(PxPhysics* gPhysics, PxScene* gScene, PxShape* sp, Vector3 
 	rigidDynamic_->setMass(mass_);
 	PxRigidBodyExt::updateMassAndInertia(*rigidDynamic_, mass_ / volume_);
 
+	//Me da errores
+	//material_ = gPhysics_->createMaterial(0.1f, 0.1f, 0.0f);
+	//shape_->setMaterials(&material_, 1);
+
 	gScene_->addActor(*rigidDynamic_);
 	rigidActor_ = rigidDynamic_;
 
@@ -23,15 +27,16 @@ RigidBody::~RigidBody() {
 
 	if (rigidDynamic_ != nullptr) {
 		rigidDynamic_->release();
+		rigidDynamic_ = nullptr;
 	}
 	renderItem_->release();
 	renderItem_ = nullptr;
 }
 
 bool RigidBody::integrate(double t) {
-	//Actualizo posicion (para muelles)
+	//Actualizo posicion del transform
 	Vector3 vel = getVel();
-	vel = vel*  pow(dumping_, t);
+	//vel = vel*  pow(dumping_, t);
 	tr_.p += vel * t;
 
 	aliveTime_ -= t;
@@ -72,6 +77,12 @@ void RigidBody::setMass(double m) {
 
 void RigidBody::setTensorInertia(Vector3 t) {
 	rigidDynamic_->setMassSpaceInertiaTensor(t);
+}
+
+void RigidBody::setMaterial(float restitution, float staticFriction, float dynamicFriction) {
+	material_->setRestitution(restitution);
+	material_->setStaticFriction(staticFriction);
+	material_->setDynamicFriction(dynamicFriction);
 }
 
 void RigidBody::addForce(const Vector3& f) {

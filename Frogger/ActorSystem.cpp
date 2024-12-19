@@ -24,6 +24,21 @@ ActorSystem::~ActorSystem(){
 	forceGen_.clear();
 
 	delete forceRegistry_;
+
+	delete gF_;
+	gF_ = nullptr;
+
+	delete invGF_;
+	invGF_ = nullptr;
+
+	delete windF_;
+	windF_ = nullptr;
+
+	delete tornadoF_;
+	tornadoF_ = nullptr;
+
+	delete explosionF_;
+	explosionF_ = nullptr;
 }
 
 void ActorSystem::createForceGenerators() {
