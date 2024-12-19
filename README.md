@@ -10,8 +10,8 @@ Carpetas bin y common https://ucomplutense-my.sharepoint.com/:f:/g/personal/liag
 # Manual de usuario del proyecto Final
 
 ## Descripción breve
-Después de una exploración por jardines y huertos de la zona un grupo de cinco ranas debe regresar a su estanque evitando que los vehículos que circulan por la carretera las aplasten. 
-¡Pon a prueba tus reflejos y estrategia y ayuda a que las ranas lleguen sanas y salvas a su hogar! 
+Después de explorar jardines y huertos de la zona, un grupo de cinco ranas debe regresar a su estanque, esquivando los vehículos que circulan por la carretera para evitar ser aplastadas. 
+¡Pon a prueba tus reflejos y estrategia, y ayuda a que las ranas lleguen sanas y salvas a su hogar!
 
 ## Objetivo
 Debes guiar a las cinco ranas para que lleguen a cada una de las cinco hojas situadas al otro lado de la carretera. 
